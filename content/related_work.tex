@@ -1,0 +1,152 @@
+\section{Related Work}
+
+\subsection{Deferred Shading}
+
+A first step into reducing the number of light calculations is decoupling
+geometry and shading complexity. In the modern graphical pipeline, all geometry
+in the view-frustum generates samples, regardless of whether it is occluded.
+These samples are shaded and only after shading the visible samples are
+determined in the per-pixel operations. In order to just shade the visible
+samples, the visibility of the samples has to be determined before shading.
+This concept was introduced in hardware design in 1988\cite{} and is called
+Deferred Shading. In 1990 a general purpose strategy was introduced based on so
+called GBuffers\cite{}. The idea is to render all attributes needed to shade a
+sample into texture buffers the size of the screen. Then in a second, deferred
+step these values are retrieved from the buffers to calculate the shading
+contribution.
+
+A first light assignment approach is to rasterise the light volumes, and
+only calculate the contribution of the light for the generated samples.
+This technique is called the stencil-optimalisation\cite{}. This reduces
+the number of light calculations, as no longer for each sample each light
+has to be evaluated, however there are two also two disadvantages of this
+optimalisation. Firstly it requires a significant number of memory
+accesses, as for each generated sample, the GBuffers have to be sampled.
+Secondly the light contributions are accumulated in a buffer, thus leading
+to small rounding errors.
+
+\subsection{Tiled Shading}
+
+Tiled Shading was designed to alleviate the memory bandwidth bottleneck of
+Deferred Shading with the stencil-optimalisation. The concept is to divide
+the screen space into tiles of $\mathit{n} \times \mathit{n}$ pixels. For
+each tile the light indices of the overlapping light volumes are stored.
+The tiles are subsequently used to determine the set of relevant lights per
+sample by retrieving the set of light indices associated with the tile the
+sample falls within. This technique thus only requires a single memory access
+per sample, instead of a memory access per light, thus reducing the memory
+bandwidth significantly.
+
+The tiles can be constructed by projecting the light volumes on the view port
+and determining with which tiles it overlaps. The corresponding light index
+is added to each of these tiles. A further optimalisation is to reduce the
+tile volume by only considering lights that fall within the minimum and
+maximum $z$-value of the tile. Any light that does not overlap with this
+sub frustum, is not added to the tile.
+
+This technique has been implemented in a number of games\cite{} and game engines\cite{}, including
+the unreal engine\cite{}, the frostbyte engine\cite{} and unity\cite{}.
+
+\subsection{Clustered Shading}
+
+Clustered Shading\cite{} extends Tiled Shading by subdividing the space associated
+with each tile further. The tiles are subdivided exponentially in the camera
+$z$-axis to gain cube-like sub frustums. For each of the sub frustums containing
+geometry, the overlapping lights are calculated. Furthermore additional
+attributes like normals can be used to create even more precise light assignment.
+
+The subdivision is constructed by first determining the set of clusters which
+contain geometry. This is done by transforming the depth buffer in a cluster
+buffer, by assigning each sample to a distinct bin. Then the unique clusters
+are obtained by locally sorting and compacting each tile. The cluster buffer
+is then used to create a mapping from each sample to the unique cluster to
+which it belongs. For each of the unique clusters the overlapping lights
+are added to construct a set of light indices.
+
+During the shading step the set of light indices is retrieved using the
+sample to cluster mapping constructed during the construction of the data
+structures. For each of these lights the contributions is calculated and
+summed similarly to Tiled Shading.
+
+Clustered Shading is used in several modern games, including in the Avalance
+game engine, on which games as Just Cause 2 and 3\cite{} and Doom 4\cite{} are build.
+
+\subsection{Perfect Spatial Hashing}
+
+In order to efficiently subdivide the scene space without using a large amount
+of memory an octree data structure is used. A straightforward implementation
+using pointers would require a large number of control structures. Control structures
+can lead to a significant performance loss on the GPU\cite{}. Thus such using such
+an octree would not be feasible in a light assignment algorithm. A different
+approach is needed. The linkless octree\cite{} data structure used within this paper
+is based upon perfect spatial hash functions\cite{}.
+
+Hash functions can be used to map sparse data $D$ on to a compact memory table $H$.
+
+\begin{equation*}
+  D\left(\mathbf{p}\right) = H\left[ \mathit{h}\left(\mathbf{p} \right) \right]
+\end{equation*}
+
+\noindent When a hash function is perfect no keys map to the same address. 
+This feature can be used on the GPU as it will ensure no control structures are needed to extract a
+value associated with a key from memory.
+
+The goal of perfect spatial hashing to hash multi-dimensional sparse data onto a compact
+memory table, without having any collisions and maintaining spatial coherence.
+This makes the data structure fitted for applications on the graphics card.
+The perfect spatial hash function $\mathit{h}$ is build with two imperfect hash functions,
+$\mathit{h}_0$ and $\mathit{h}_1$ and an offset hash table $\Phi$. The idea is to dissolve
+collisions in $\mathit{h}_0$ with the offset values in $\Phi$. This leads to the following
+definition:
+
+\begin{equation*}
+  \mathit{h}\left(\mathbf{p}\right) = \mathit{h}_0\left(\mathbf{p}\right) + \Phi\left[\mathit{h}_1\left(\mathbf{p}\right)\right]
+\end{equation*}
+
+\noindent where $\mathit{h}_0$ and $\mathit{h}_1$ are simple hash functions defined as:
+
+\begin{align*}
+  \mathit{h}_0\left(\mathbf{p}\right) =& \mathbf{p} \operatorname{mod} \dot{m} \\
+  \mathit{h}_1\left(\mathbf{p}\right) =& \mathbf{p} \operatorname{mod} \dot{r}
+\end{align*}
+
+\noindent where $\dot{m}$ is the dimension of hash table $H$ and $\dot{r}$ the dimension
+of hash table $\Phi$.
+
+This representation makes it possible to represent sparse three dimensional data efficiently
+in memory. The linkless octree data structure will be build with these perfect spatial hash
+functions.
+
+\subsection{Linkless Octree}
+
+The linkless octree is a GPU efficient octree implementation, which is utilised in the
+Hashed Shading algorithm. It represents each layer of the octree as a perfect spatial
+hash function.
+
+An octree contains a number of layers, each layer has a defined node size, thus the position
+of each node can be represented by a three dimensional integer vector. There exists a node
+at position $\mathbf{p}_l$ in layer $\mathit{l}$ if and only if at layer $\mathit{l} - 1$
+there is a branch node containing the node at position $\mathbf{p}_l$ or $\mathbf{p}_l$ is the
+root node of the octree. This means that each layer consists of a set of nodes sparsely distributed
+over the octree space. Each layer can thus be efficiently represented by a perfect spatial hash function.
+
+In order to encode a layer, the data associated with a node needs to be defined. This data encodes
+the type of an octree node at position $\mathbf{p}$. An octree node can either be a branch
+node or a leaf node, and an octree node can be either empty or non-empty. Thus each octree node
+can be represented by two boolean values. Due to memory considerations eight nodes are combined
+and represented by two 8-bit integers. Since each branch node contains eight children, each
+linkless octree node in layer $\mathit{l}$ represents a branch node containing the types of
+its eight children at depth $\mathit{l}+1$.
+A complete octree can be represented by constructing a perfect spatial hash function for each
+layer.
+
+The data saved in the octree node needs to be stored as well. There are two options to do this.
+Either the data is stored directly in the hash table of the perfect spatial hash function, or
+the data is stored separately. In case the data is stored directly inside the hash table,
+each hash table entry requires the memory to hold two 8-bit integers and eight times the
+memory of a single data element associated with an octree node. This approach is infeasible
+when the data is large, or only a small subset of nodes actually contains data. In these
+cases the data can be saved in a separate perfect spatial hash function. The hash table
+associated with this second perfect spatial hash function will contain an entry for each non-empty
+child node of the nodes saved in the first spatial hash function.
+

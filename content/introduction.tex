@@ -1,0 +1,31 @@
+\section{Introduction}
+
+In order to push the limits of visual fidelity, modern games are shaded with
+ever increasing number of lights and shaders with more complexity. These shading
+calculations make up a significant percentage of the amount of work to render a
+single frame. To facilitate these complex shading calculations in a real-time
+application, it is important that the number of light calculations is kept to
+a minimum. There are several different approaches to reducing this workload.
+Light assignment in one of such approaches. It is a technique that reduces the
+number of light calculations per pixel be excluding lights that do not influence
+a pixel. This is possible due to representing lights as having a finite volume
+of influence. Ideally, per pixel only lights which are contained in the light
+volume are evaluated for that pixel.
+
+In modern games two light assignment algorithms are used commonly. Tiled
+Shading\cite{} and Clustered Shading\cite{}. Both rely on a subdivision
+of the view frustum to assign lights to pixels. This requires a complete
+recalculation of the associated data structures per frame. With a high frame
+rate of between 30 and 60 frames a second, most changes between frames are small
+and local. Thus a significant part of the light assignment data structures could
+potentially be reused.
+
+We introduce the Hashed Shading algorithm, which does not require a complete
+rebuild of the associated data structures per frame, in order to explore
+whether reusing data structures per frame is a feasible approach that leads
+to a performance gain compared to Tiled and Clustered Shading.
+
+We make use of a camera-independent octree data structure to subdivide the scene
+space. This camera-independent data structure allows us to reuse the data structures
+between frames, even if the camera position changes.
+

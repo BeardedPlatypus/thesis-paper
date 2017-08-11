@@ -1,0 +1,200 @@
+\section{Hashed Shading Algorithm}
+%\subsection{Overview}
+
+\input{./img/tex/hs-data-structures.tex}
+
+The goal of the Hashed Shading algorithm is to reduce the amount of work
+required to build the data structures between frames, in order to improve the
+overall performance compared to Tiled and Clustered Shading. It does so by
+dividing the scene space camera-independently. Thus the data structures can be
+reused between frames even if the camera position changes.
+The scene space is represented with an octree data structure. This representation
+is both precise and memory efficient.
+
+The used data structures are based on the data structured used within Tiled and
+Clustered Shading:
+
+\begin{itemize}
+  \item Linkless octree
+  \item Light index list
+  \item Global light list
+\end{itemize}
+
+\noindent The linkless octree replaces the tiles and clusters in Tiled and Clustered
+Shading respectively. It contains two integers per filled node, one that defines the
+offset within the light index list, and one that defines the size of the set of
+indices within the light index list.
+
+In order to construct these data structures the following steps have to be executed:
+
+\begin{itemize}
+  \item Define the scene space subdivision.
+  \item Calculate the influence of each light on the subdivision.
+  \item Combine the influences into one single scene octree.
+  \item Construct the linkless octree and light index list based on the scene octree.
+\end{itemize}
+
+\noindent The first step requires the origin of the octree and the total size to be
+calculated. Once these values are specified it is possible to define the influence
+of each light in the scene. The combination of these influences leads to a scene
+octree which has to be represented as a linkless octree in order to be used
+effectively on the GPU. Finally for each sample the set of relevant lights is calculated
+by descending into the octree. These steps will be explained in more detail in the
+following chapters.
+
+\subsection{Specification of the Octree}
+
+To construct the octree a minimum bounding box which will fit all the lights at any
+point in time during the simulation, needs to be defined. The minimum and maximum
+points that define this bounding box can either be set by a developer or calculated
+based on the light volumes. In order to ensure small rounding errors do not affect
+the octree, an offset is added to these points.
+
+Once the bounding box has been defined the size of the octree can be calculated. The
+developer is responsible for setting the size of the nodes in the deepest layer of
+the octree. Based on this node size $\mathit{l}$, the size of the octree can be calculated.
+Assuming that $\mathit{d}_i$ is the maximum length of any of the sides of the
+bounding box, the number of layers is equal to the smallest value of $k$ for
+which holds
+
+\begin{equation*}
+  \mathit{l} \cdot 2^k \geq \mathit{d}_i
+\end{equation*}
+
+\noindent The size of the octree is equal to $\mathit{l} \cdot 2^k$.
+With the origin and size defined it is possible to assign the lights to this subdivision of
+space.
+
+\subsection{Per Light Construction}
+
+\input{./img/tex/hs-p1.tex}
+
+We only consider point lights within the current implementation of the algorithm. In order to
+support different light types, a similar approach need to be developed for these lights, such
+that the influence they have on the scene space subdivision can be efficiently calculated.
+
+Any light has an influence on a node if the light volume overlaps with the node volume. In case
+of point lights this can be easily calculated by comparing the distance between the light origin
+$\mathbf{l}\mathtt{.orig}$ and the point inside the node volume closest to the light origin $\mathbf{p}$,
+and the radius of the point light $\mathbf{l}\mathtt{.radius}$
+volume. In case this distance is smaller than the radius, the node volume overlaps with the light
+volume:
+
+\begin{equation*}
+  \left\lVert \mathbf{p} - \mathbf{l}\mathtt{.orig} \right\rVert < \mathbf{l}\mathtt{.radius}
+\end{equation*}
+
+\noindent Point $\mathbf{p}$ within the node volume and closest to the light origin can be easily
+calculated by clamping the light volume per dimension between the extreme values of the node:
+
+\begin{equation*}
+  \mathbf{v} = \begin{pmatrix} \mathbf{l}.\mathtt{orig}_x \vert_{\mathbf{n}_{x}, \mathbf{n}_{x} + \mathit{l}} \\
+                               \mathbf{l}.\mathtt{orig}_y \vert_{\mathbf{n}_{y}, \mathbf{n}_{y} + \mathit{l}} \\
+                               \mathbf{l}.\mathtt{orig}_z \vert_{\mathbf{n}_{z}, \mathbf{n}_{z} + \mathit{l}} 
+\end{pmatrix} 
+\end{equation*}
+
+\noindent where $\mathbf{n}$ is the origin of the node.
+
+This calculation does not need to be executed for every node within the scene space.
+Any node overlapping with the light lies within the minimal grid of nodes which contains the light volume.
+Furthermore, each light is uniform, meaning that once we have established the boundaries of overlapping
+and non-overlapping nodes, we know of all nodes whether they are overlapping or not.
+This can be exploited by using a flood-fill algorithm to either fill the empty or overlapping nodes.
+
+Because the volume of a sphere is slightly bigger than half its bounding box and because partly
+overlapping nodes are also considered non-empty, we start with the assumption that each node
+is overlapping, and fill the non-overlapping nodes. We use a breadth-first flood fill algorithm,
+where each of the corner nodes of the grid are the seed nodes. If a node overlaps it is marked as
+checked and removed from the queue. If a node does not overlap it is marked as checked and the
+three nodes adjacent to the node facing inwards are added to the queue if they have not been checked
+before. This is process is shown in figure \ref{}.
+Once the queue is empty, all overlapping nodes have been determined.
+
+\input{./img/tex/hs-slt.tex}
+
+Finally the way these lights are represented in memory needs to be considered. If a light is
+static during a whole simulation, there is no need to save the explicit influence of the
+light separately and the overlapping nodes can all be combined in the scene octree.
+However when a light is dynamic, the changing influence of the light on the subdivision of
+the scene space needs to be calculated. This can be done efficiently by comparing the nodes
+a light influences in the previous and current frame. Thus it is necessary to efficiently
+represent each dynamic light in memory, in order to save computation time.
+When the lights are small, or the node size is large, the grid could be saved directly in
+memory. However when the node size is small compared to the point light radius, this leads
+to unnecessary memory usage. The grid can be represented more compact by converting it into
+an octree as well. This can be done in a top-down fashion by making use of the grid.
+First the octree node which fully contains the grid is calculated. This node will serve
+as a root node. For each node there are initially three possible options. The grid
+does not overlap with the node, in which case the node is empty, as no overlapping nodes
+lay outside of the grid. The grid partially overlaps with the node and the node falls
+within the grid.
+
+When the node overlaps partially there are two possibilities. Either the grid node
+in the octree node closest to the light origin is overlapping, or it is not.
+If it is, then the octree node is a branch node, and the eight children are evaluated.
+If the grid node does not overlap with the light volume, the octree node is empty
+as well.
+
+In the last case there are three possibilities. If the grid node within the octree
+node volume closest to the light origin is empty, the octree node will be empty
+as well. If the closest grid node overlaps with the light volume, then either
+the grid node within the octree node volume furthest from the light origin overlaps
+with the light volume or it does not. In case it overlaps as well, then the whole
+octree node volume overlaps, and thus the octree node is an overlapping leaf node.
+If the furthest grid node does not overlap, the octree node contains both overlapping
+and non-overlapping nodes, and the octree node is a branch node. The children of
+this octree node are subsequently evaluated.
+
+\subsection{Construction of the Scene Octree}
+
+The scene octree is an octree structure of which the leaf nodes contain references
+to the lights which overlap with the leaf node volumes. Depending on the representation
+of the single lights, the scene octree can be constructed either top-down or bottom-up.
+
+In case the lights are represented by the grid nodes which overlap with the light volume,
+the nodes need to be combined first. This creates a set of nodes of minimum size that contain a set of
+references to lights that overlap with these nodes. These can then be used to construct
+the octree bottom-up. If the eight sibling nodes are leaf nodes and contain the same set of indices, it can
+be replaced by a single leaf node in a higher layer, else a branch node in the layer above can be
+added.
+
+In case an octree representation is used, the scene octree can be build top-down by
+recursively adding the light octrees to the scene octree. For each light octree the
+scene octree node corresponding with the root of the light octree is found. Then the nodes
+of the light octree are recursively added, where the filled light octree nodes are added
+by adding the corresponding light index to the scene octree leaf node.
+
+\subsection{Construction of the Linkless Octree and Light Index List}
+
+As described in the overview, the octree nodes will specify a subset of the light index list.
+Because this data is only saved in the leaf nodes of the scene octree. We opted for the
+linkless octree variant that saves the data of the octree nodes separately from the octree
+structure. Thus per layer a maximum of two spatial hash functions is constructed.
+
+In the first step of construction of the linkless octree and light index list, the scene
+octree nodes at the specified starting depth are gathered. For each of these nodes the
+octree structure value is calculated as is specified in the algorithm of the linkless octree.
+For each node we save whether the node is a leaf node, and whether the node contains any
+information. If a node contains information, this information is stored in the second
+spatial hash function. For each non-empty leaf node, the length of light index list
+is saved, then the indices associated with the leaf node are added to the light index list.
+The value saved in the second spatial hash function specifies the offset, equal to the length
+of the light index list before adding the indices, and the length of the set of light indices.
+
+\subsection{Light Assignment during Shading}
+
+The final step of the algorithm is to use the constructed data structures to determine the set
+of relevant lights per sample during the shading step. This step is similar to the shading
+step of both Tiled and Clustered Shading. In order to find the subset of indices within the
+light index list for a sample, we need to descend into the octree. For each layer we
+calculate the octree structure of the node in which the sample falls. If this is a branch node,
+the next layer is calculated. If the scene octree node is an empty leaf node, a vector containing
+two zeroes is returned. If the the scene octree node is non-empty, the corresponding value is
+obtained from the second spatial hash function of the current layer. The found offset and length
+are returned.
+
+Once the offset and length are obtained, the algorithm loops over the light indices within
+the light index list, and for each light calculates the light contribution to the sample.
+These values are summed and saved for the particular sample.
+

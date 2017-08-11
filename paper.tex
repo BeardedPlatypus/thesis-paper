@@ -1,0 +1,99 @@
+\documentclass[sigconf]{acmart}
+
+% ------------------------------------------------------------------------------
+% Pacakges
+% ------------------------------------------------------------------------------
+% math
+\usepackage{amssymb, amsmath}
+
+% images
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{tikz}
+\usepackage[export]{adjustbox}
+\usepackage{float}
+
+% tables
+\usepackage{booktabs}
+\usepackage{tabularx}
+
+% url
+\usepackage{hyperref}
+
+%%% Make the ``BibTeX'' word pretty...
+%\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+%    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+%%% Used by the ``review'' variation; the online ID will be printed on 
+%%% every page of the content.
+
+% ------------------------------------------------------------------------------
+% acm art settings
+% ------------------------------------------------------------------------------
+%\TOGonlineid{45678}
+%\TOGvolume{0}
+%\TOGnumber{0}
+
+\title{Hashed Shading}
+\author{Martinus Wilhelmus Tegelaers}
+\affiliation{\institution{KULeuven}}
+\email{mwtegelaers@gmail.com}
+%\pdfauthor{Martinus Wilhelmus Tegelaers}
+
+\keywords{real-time graphics, light assignment, shading}
+
+\begin{CCSXML}
+  <ccs2012>
+  <concept>
+  <concept_id>10010147.10010371.10010372.10010373</concept_id>
+  <concept_desc>Computing methodologies~Rasterization</concept_desc>
+  <concept_significance>500</concept_significance>
+  </concept>
+  </ccs2012>
+\end{CCSXML}
+
+
+\setcopyright{rightsretained}
+\copyrightyear{2017}
+
+% ------------------------------------------------------------------------------
+% Document
+% ------------------------------------------------------------------------------
+\begin{document}
+\begin{teaserfigure}
+   \includegraphics[height=1.5in]{images/sampleteaser}
+   \caption{Spring Training 2009, Peoria, AZ.}
+   \label{fig:teaser}
+\end{teaserfigure}
+
+\input{./content/abstract.tex}
+
+\maketitle
+
+
+%\keywordlist
+
+%\conceptlist
+
+%\printcopyright
+
+\input{./content/introduction.tex}
+\input{./content/related_work.tex}  
+\input{./content/algorithm.tex}
+\input{./content/implementation.tex}
+\input{./content/results.tex}
+\input{./content/conclusion.tex}
+
+%\section{Contact Information}
+
+%If you have questions or suggestions regarding this document, please
+%contact Stephen Spencer at ``spencer@cs.washington.edu''.
+
+%\section*{Acknowledgements}
+
+%To Robert, for all the bagels.
+
+\bibliographystyle{acmsiggraph}
+\nocite{*}
+\bibliography{template}
+\end{document}

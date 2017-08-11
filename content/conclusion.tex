@@ -1,0 +1,144 @@
+\section{Conclusion}
+
+In this paper we have presented and evaluated the Hashed Shading algorithm. In Hashed Shading
+the scene space is divided independent of the camera with a linkless octree data structure.
+The linkless octree allows for efficient light assignment and reuse of data structures between
+frames. We have shown that it is possible to achieve better performance than Tiled Shading
+by using this camera-independent data structure. Furthermore for small node sizes, the
+number of light calculations approaches that of Clustered Shading, and could potentially
+exceed it. There are two problems with the current implementation of Hashed Shading;
+no dynamic lights are supported and the memory footprint is large. These two issues need
+to be addressed before Hashed Shading becomes a viable alternative for Tiled and Clustered
+Shading.
+
+\section{Future work}
+
+The two main issues with the current implementation of Hashed Shading are the large memory
+footprint and the lack of support for dynamic lights. These two issues have to be addressed
+before Hashed Shading can become a viable alternative to Clustered Shading. Proposals
+to solve those two issues are introduced in the next sections.
+
+Besides these two issues there are several other options for future work. Currently
+the Hashed Shading algorithm only supports point lights, in order to support other
+lights, their volumes need to be represented as octrees efficiently. Secondly
+the current implementation has no support for shadows. There are several ways in which
+the Clustered Shading clusters are leveraged to reduce the work required to calculate
+shadows\cite{}. Similar techniques could be developed by using the Hashed Shading octree.
+
+\subsection{Memory Usage Reduction}
+\subsubsection{Geometry}
+
+\input{./img/tex/vo-geometrie.tex}
+
+An important insight Clustered Shading leverages to reduce the memory usage is that samples
+will only be generated in clusters that contain geometry. Thus there is no need to construct
+clusters that will not generate samples. A similar approach can be used in Hashed Shading.
+A second octree with the same size and origin can be constructed for the geometry, where in
+the leaf node is stored if the corresponding volume contains geometry. This octree can then
+be used to determine whether a node has to be saved or not. Only if a node contains geometry
+it needs to be physically saved, and only if the node contains both lights and geometry it
+needs to be saved in the second spatial hash function. Thus such an octree could greatly
+reduce the number of nodes as is shown in figure \ref{fig:vo-geometrie}.
+
+A second advantage of this approach would be that a smaller node size would not directly
+cubicly increase the number of nodes. As a smaller node size would also increase the
+precision with which the geometry is represented, it would actually increase the amount of
+empty space, thus reducing the amount of nodes that need to be kept in memory.
+
+Lastly the conditions required for a set of sibling nodes to be combined into a single
+parent node could be weakened. Since nodes which do not contain any geometry data will
+never be queried, an arbitrary value could be assigned to them, without influencing the
+performance of Hashed Shading. The current condition requires all the sibling nodes to
+have the same set of lights, before they can be combined into a single leaf node. With
+this optimalisation this can be reduced to all sibling nodes which contain geometry
+need to contain the same set of lights. This would further reduce the number of nodes
+needed to represent the scene space.
+
+\subsubsection{Subdivision of Space}
+
+\input{./img/tex/vo-textures.tex}
+
+A common approach in many graphical applications is to only load data into memory which
+is visible, i.e. only that which falls within the view frustum. In the current implementation
+the whole scene is loaded into memory, without any regard for the view frustum, which leads
+to an unnecessary large memory usage. If the view frustum is significantly smaller than the
+whole scene, it can be advantageous to subdivide the light assignment octree in chunks, and
+only load the visible chunks into memory. If the chunk size is set to be similar to the view
+frustum, at least eight chunks are required to cover the view frustum at any point.
+This could be extended to 27 chunks if camera rotations are common. In this case no new chunks
+will have to be loaded in when the camera orientation changes, thus reducing the texture
+bandwidth.
+
+A potential problem of this approach is the large number of textures required to represent
+the octree. Each layer of each chunk would require two separate texture, four if the layer
+also contains leaf nodes. If 27 chunks are used, and each chunk uses several layers, this
+would quickly lead to an infeasible amount of textures. However looking at the results of
+the memory usage, it can be shown that the majority of the memory is used in the deeper
+layers, which contain a large number of nodes, and that the shallow layers are relatively
+small. An alternative would be to only subdivide the space into chunks at a certain depth.
+In the current implementation each layer represents the full scene space, however there is
+no obstacle into subdividing this space into smaller chunks. If we would subdivide layer $l + 1$
+into chunks, then the branch nodes in layer $l$ would only require a single pointer to identify
+the chunk in which the child node lays. This would make it possible to reduce the memory usage
+by the deeper layers, while keeping the number of changing textures to a minimum.
+The possible options are shown in figure \ref{fig:vo-textures}.
+
+Finally the chunk approach would make it trivial to support level of detail. Objects closer
+to the camera will generally take up more screen space than objects further away from the camera,
+due to perspective. Thus if the same reduction of light calculations is created for objects
+far away from the camera as for objects close by the camera, the amount of memory used to reduce
+the number of lights for samples far away will be relatively greater. By reducing the amount of
+memory used for space further away from the camera, and increasing it for space close to the
+camera, a greater reduction of light calculations overall can be achieved. In Clustered
+Shading this is done by scaling the cluster volume with regards to the camera-z-axis.
+
+The linkless octree could support this level of detail by defining multiple spatial hash functions
+per layer. When a chunk is loaded close to the camera, the regular spatial hash functions would
+be loaded. For chunks further from the camera, only layers till a certain value could be loaded
+in, where the last loaded layer contains only leaf nodes. Thus per layer one regular spatial hash function
+and one spatial hash function only containing leaf nodes would have to be defined.
+
+\subsection{Dynamic Light Support}
+
+The second issue of the current implementation of Hashed Shading is the lack of support for
+dynamic lights. The downside of not rebuilding data structures per frame is that changes
+in lights are not implicitly reflected in the data structures any more. Supporting dynamic
+lights would thusly increase the amount of work per frame.
+Games and other real-time applications generally have a high frame rate, between 30 and 60 frames
+per second, thus changes in lights are generally small and local. This could be leveraged
+to efficiently update the Hashed Shading data structures.
+The bottleneck operation in the construction of Hashed Shading is the construction of the
+spatial hash functions of the layers of the octree. These operations thus need to be kept
+to a minimum. A spatial hash function needs to be rebuild if a new node is added that collides
+with an existing value:
+
+\begin{equation*}
+    H\left[ \mathit{h}_0\left(\mathbf{k}\right) + \Phi\left[ \mathit{h}_1\left(\mathbf{k}\right) \right] \right] \neq \varnothing 
+\end{equation*}
+
+\noindent where $\mathbf{k}$ is the position of a new node. In all other cases the existing
+textures can be updated without a complete recalculation of the spatial hash function of a layer.
+A node is added to the second spatial hash function if a light index gets added to a previously empty
+node. When a leaf node gets subdivided into eight child nodes, a new node is added to the first
+spatial hash function of the next layer describing these eight child nodes, and for each of the child
+nodes that contain data, the data nodes are added to the second spatial hash function of the next layer.
+The subdivision of nodes thusly is most likely the main source of recalculations.
+
+It might prove efficient to extend the size of the hash tables slightly to increase the amount
+of empty space. While this would increase the memory foot print, it could greatly reduce the
+number of times a spatial hash function has to be recalculated. The effects of such a change
+would be useful to explore.
+
+In the current implementation the whole space is globally linked to the same layers, thus a local
+change of a single light might require the complete space to be recalculated. Thus currently we
+can not take advantage of the local nature of light changes. If we were to combine the support
+of dynamic lights with the chunk optimalisation, we only have to update the chunk which is affected
+by a light change, reducing the space affected by that change. Furthermore, because the construction
+time of a spatial hash functions is directly linked to its size, recalculating the spatial hash function
+of a chunk would be smaller than recalculating the spatial hash function of the complete space, thus it
+would further reduce the amount of time needed to update.
+Lastly, only chunks that are currently in memory need to be updated immediately, as changes to these
+chunks are directly visible. Changes to chunks that are not currently loaded on the GPU will not be visible
+until this chunk is loaded on the GPU. These changes can then be incorporated in loading the chunk into
+memory, thus reducing bandwidth, and potentially execution time.
+
