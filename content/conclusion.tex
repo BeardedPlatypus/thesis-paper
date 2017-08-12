@@ -1,15 +1,40 @@
 \section{Conclusion}
 
-In this paper we have presented and evaluated the Hashed Shading algorithm. In Hashed Shading
-the scene space is divided independent of the camera with a linkless octree data structure.
-The linkless octree allows for efficient light assignment and reuse of data structures between
-frames. We have shown that it is possible to achieve better performance than Tiled Shading
-by using this camera-independent data structure. Furthermore for small node sizes, the
-number of light calculations approaches that of Clustered Shading, and could potentially
-exceed it. There are two problems with the current implementation of Hashed Shading;
-no dynamic lights are supported and the memory footprint is large. These two issues need
-to be addressed before Hashed Shading becomes a viable alternative for Tiled and Clustered
-Shading.
+In this paper the Hashed Shading algorithm has been presented and evaluated. Hashed Shading is
+a light assignment algorithm which subdivides the scene space independently of the
+view frustum. This subdivision is then stored in a linkless octree which can be queried during
+shading. Because the subdivision is independent of the view frustum, changes in the camera
+position and orientation do not require a complete recalculation of the data structures. Thus the
+data structures can be reused between frames.
+
+The Hashed Shading algorithm performs better than the Tiled Shading algorithm and
+approaches the reduction of light calculations achieved by Clustered Shading.
+Furthermore Hashed Shading performs slightly better with increasing resolutions
+compared to both Tiled and Clustered Shading, because its subdivision does not
+depend directly on the direction.
+
+However there are still two major problems with the current Hashed Shading implementation.
+The memory footprint increases cubicly with a decreasing node size. This leads
+to unacceptable memory requirements for small node sizes. Secondly dynamic lights
+are not currently not supported within the Hashed Shading implementation. Adding
+this support would increase computation time during shading.
+
+Overall it can be concluded that camera-independent light assignment is a viable strategy.
+The decoupling of resolution could play a role with the trend of increasing screen resolutions.
+Future work would need to solve the memory requirements and allow for efficient support
+of dynamic lights in order for Hashed Shading and similar algorithms to be competitive with
+Clustered Shading.
+
+% In this paper we have presented and evaluated the Hashed Shading algorithm. In Hashed Shading
+% the scene space is divided independent of the camera with a linkless octree data structure.
+% The linkless octree allows for efficient light assignment and reuse of data structures between
+% frames. We have shown that it is possible to achieve better performance than Tiled Shading
+% by using this camera-independent data structure. Furthermore for small node sizes, the
+% number of light calculations approaches that of Clustered Shading, and could potentially
+% exceed it. There are two problems with the current implementation of Hashed Shading;
+% no dynamic lights are supported and the memory footprint is large. These two issues need
+% to be addressed before Hashed Shading becomes a viable alternative for Tiled and Clustered
+% Shading.
 
 \section{Future work}
 
@@ -18,12 +43,21 @@ footprint and the lack of support for dynamic lights. These two issues have to b
 before Hashed Shading can become a viable alternative to Clustered Shading. Proposals
 to solve those two issues are introduced in the next sections.
 
-Besides these two issues there are several other options for future work. Currently
-the Hashed Shading algorithm only supports point lights, in order to support other
-lights, their volumes need to be represented as octrees efficiently. Secondly
-the current implementation has no support for shadows. There are several ways in which
-the Clustered Shading clusters are leveraged to reduce the work required to calculate
-shadows\cite{}. Similar techniques could be developed by using the Hashed Shading octree.
+Besides these two issues, there are several other directions for future work. Currently
+the Hashed Shading implementation only supports point lights. In order to support
+other light types, strategies to convert their light volumes into octrees need to be
+drafted. The current implementation also does not support shadows currently. There
+are several algorithms which leverage the clustered shading clusters to reduce
+the amount of work required to support shadows within Clustered Shading\cite{Olsson:2014:EVS:2556700.2556701, kampe2016fast}.
+Similar approaches could be used to support shadows in Hashed Shading by leveraging
+the octree data structure.
+
+% Besides these two issues there are several other options for future work. Currently
+% the Hashed Shading algorithm only supports point lights, in order to support other
+% lights, their volumes need to be represented as octrees efficiently. Secondly
+% the current implementation has no support for shadows. There are several ways in which
+% the Clustered Shading clusters are leveraged to reduce the work required to calculate
+% shadows\cite{}. Similar techniques could be developed by using the Hashed Shading octree.
 
 \subsection{Memory Usage Reduction}
 \subsubsection{Geometry}

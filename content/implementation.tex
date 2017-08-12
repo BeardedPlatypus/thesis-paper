@@ -5,62 +5,99 @@ was developed. This program was build with \texttt{C++} and \texttt{openGL} and
 compiled with Visual Studio 2015. 
 Besides the Hashed Shading algorithm also a naive implementation which evaluates each
 light per sample, and the Tiled and Clustered Shading algorithms were implemented.
-All programs execute the same shading code, a simple white lambertian material.
+All programs execute the same shading code, a simple white Lambertian material.
 
 \subsection{Deferred Shading}
 
-Deferred is implemented by executing two render passes. In the first pass
+Deferred Shading is implemented by executing two render passes. In the first pass
 the normal, a white albedo colour, and the depth are written to a GBuffer containing
-the corresponding textures. In a second pass a full screen quad is rendered, and for
-each sample the shading information is retrieved from the GBuffer and the
+the corresponding textures. In the second pass a full screen quad is rendered, and for
+each generated sample the shading information is retrieved from the GBuffer and the
 light contributions calculated.
 
 \subsection{Tiled Shading}
 
-The forward and deferred Tiled Shading shaders make use of the ... algorithm to
-map the light volumes on the screen space. This is done on the CPU. The implementation
-does not take into account the minimum and maximum $z$-values within tiles, thus
-the tile volumes are not optimised with regards to these values.
+In the forward and deferred Tiled shaders, the tiles which are influenced
+by a light are determined by computing the bounding box of the projected light volume
+in screen space\cite{mara20122d}. Then to each of the tiles overlapping with this
+boundary box, the light index is added. This is all done on the CPU. The implementation
+does not take into account the minimum and maximum $z$-values within tiles. Thus the
+subdivision is not constrained with regards to these values.
 
 \subsection{Clustered Shading}
 
-Clustered Shading was implemented without the bounding volume hierarchy specified in
-the original algorithm, the lights instead were assigned in a brute force fashion by
-adjusting the Tiled Shading algorithm, and evaluating whether it overlapped with any
-clusters which contained geometry. The sort and compact step were implemented with
-\texttt{openGL} compute shaders. The assignment of lights was implemented on the CPU
-which requires the use of \texttt{glGetImage}\footnote{}. This leads to a significant
-slow down of the algorithm which skews the execution time results.
+Clustered Shading was implemented without the bounding volume hierarchy to assign
+lights to the clusters specified in the original algorithm. The lights instead were
+assigned in a brute force fashion by adjusting the Tiled Shading algorithm, and evaluating
+whether it overlapped with any clusters which contained geometry. The sort and compact
+step were implemented with \texttt{openGL} compute shaders. The assignment of lights is
+implemented on the CPU which required the use of
+\texttt{glGetTexImage}\footnote{\texttt{glGetTexImage}: {\tiny\url{https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGetTexImage.xhtml}}}
+This leads to a significant slowdown of the algorithm which skews the execution time results.
+
+\subsection{Hashed Shading}
+
+Hashed Shading is completely implemented on the CPU.  The individual lights are
+represented by by octrees. The size of the offset hash table $\Phi$ is selected
+by using the $\frac{n}{6}$ approximation, and increased geometrically until a correct
+perfect spatial hash function is constructed. The offset and length values are
+represented by 32 bit unsigned integers.
 
 \section{Evaluation}
+
+The performance of the Hashed Shading algorithm is evaluated with regard to both
+the construction of the data structures and the execution during shading. The construction of
+the data structures is evaluated with regards to both the time required to construct the
+data structures as the memory they take up. The total amount of pixels required by the linkless
+octree and the size of the Light Index List are used as indicators for this memory usage.
+
+The performance of the shading is evaluated by timing the execution time per frame and by
+calculating the total number of light calculations required to shade a frame in the
+deferred pipeline. These values are compared to those of the Tiled and Clustered implementation.
+Due to the performance issues of the Clustered Shading implementation the execution time of
+Clustered Shading is not taken into account.
+
+All timings are performed with the \texttt{QueryPerformanceCounter} provided on the Windows
+platform.
+
+The different tests were performed for three scenes:
+
+\begin{itemize}
+  \item Spaceship Indoor: an indoor spaceship scene based on CG Lighting Challenge \#18\footnote{scene url:\url{http://www.3drender.com/challenges/}}.
+  \item Piper's Alley: a street scene based on CG Lighting Challenge \#42\footnote{scene url:\url{http://forums.cgsociety.org/archive/index.php?t-1309021.html}}.
+  \item Ziggurat City: A shot from the open movie Sintel\footnote{open movie url: \url{durian.blender.org}}.
+\end{itemize}
+
+\noindent These scenes were chosen to represent the different potential game environments.
+
+
 % Add information about how the nodde sizes are related
 % Latter compared to Tiled and Clustered Shading
 
 % Construction Time and Memory Usage
-The performance of Hashed Shading algorithm is evaluated with regards to both its construction
-and the execution. For the construction the construction time is evaluated. Furthermore the
-number of pixels used in the perfect spatial hash functions and the size of the light index
-list are evaluated.
+% The performance of Hashed Shading algorithm is evaluated with regards to both its construction
+% and the execution. For the construction the construction time is evaluated. Furthermore the
+% number of pixels used in the perfect spatial hash functions and the size of the light index
+% list are evaluated.
 
 % Light calculations and execution time
-The execution time of both the Forward and the Deferred Pipeline are compared to the Tiled and
-naive implementations. Due to complications with the Clustered Shading implementation, its
-execution time is not taken into account. The number of light calculations per frame for
-the deferred naive implementation, deferred tiled shading, deferred clustered shading and
-deferred hashed shading were also compared.
+% The execution time of both the Forward and the Deferred Pipeline are compared to the Tiled and
+% naive implementations. Due to complications with the Clustered Shading implementation, its
+% execution time is not taken into account. The number of light calculations per frame for
+% the deferred naive implementation, deferred tiled shading, deferred clustered shading and
+% deferred hashed shading were also compared.
 
 % 3 scenes used
-All tests were done for three scenes. An indoor spaceship scene was based on CG Lighting
-Challenge \#18\footnote{}. A street scene was based on CG Lighting Challenge \#42\footnote{}.
-And a city scene based on a scene from the open movie Sintel\footnote{}. These scenes were
-chosen to represent different possible game environments. For each scene light generation
-volumes were defined. Within these volumes different number of lights were generated, to
-create different number of lights for each scene.
+% All tests were done for three scenes. An indoor spaceship scene was based on CG Lighting
+% Challenge \#18\footnote{}. A street scene was based on CG Lighting Challenge \#42\footnote{}.
+% And a city scene based on a scene from the open movie Sintel\footnote{}. These scenes were
+% chosen to represent different possible game environments. For each scene light generation
+% volumes were defined. Within these volumes different number of lights were generated, to
+% create different number of lights for each scene.
 
-% each value evaluated with regards to the resolution and lights averaged over whole executions
 The influence of both the number of lights, as the resolution on the execution time and
 number of lights of the different light assignment algorithms is evaluated. For this six
-different resolutions ranging from $320 \times 320$ to $2560 and 2560$ are evaluated, and
+different resolutions ranging from $320 \times 320$ to $2560 \times 2560$ are evaluated, and
 number of lights ranging from less than a hundred till more than a thousand lights per
 scene are evaluated.
 
@@ -75,16 +112,4 @@ All of these simulations were executed on a Dell XPS laptop with the following h
     GPU drivers & 372.70                           \\ \bottomrule
   \end{tabular}
 \end{table}
-
-
-
-
-
-
-
-
-
-% Hardware used
-
-% Analysis done with seaborne and pandas
 

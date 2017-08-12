@@ -1,59 +1,125 @@
 \section{Results and Discussion}
 
-In order for Hashed Shading to be viable, it would need to perform similarly to
-Tiled and Clustered Shading. Furthermore it should not use an excessive amount
-of memory. 
+In order for Hashed Shading to be viable its performance needs to be at least on par
+with Tiled and Clustered Shading. This requires a low memory footprint and a similar
+reduction in execution time and number of light calculations.
+
+% In order for Hashed Shading to be viable, it would need to perform similarly to
+% Tiled and Clustered Shading. Furthermore it should not use an excessive amount
+% of memory. 
 
 
 \subsection{Construction Time and Memory Usage}
 
-The results of the construction time for different number of lights as function of the
-node size can be found in figure \ref{}. The construction time of the individual steps
-are shown in figure \ref{}. We can clearly see a cubic relation between the node size
-and the execution time. This leads to a significant increase when more than $8^3$ nodes per
-light are used. This is primarily due to the construction time of the spatial hash functions
-which represent the layers.
+The results of the construction time as function of the node size relative to the radius
+of the lights for different number of lights can be found in figure \ref{}. The
+construction time for individual functions for the largest sets of lights can be found in
+figure \ref{}. A cubic relationship between the node size and the construction time can be
+clearly observed. This leads to a  significant increase of construction time when more
+than $8^3$ nodes are required to contain a light volume.
+This increase in construction time is primarily due to the construction of the spatial
+hash functions representing the layers of the linkless octree.
 
-The same cubic relationship can be seen in the memory usage. Both the size of the light index
-list and the combined number of pixels within the textures used by the linkless octree show
-cubic growth with regards to a smaller node size. The majority of the memory is used in
-the deepest layers of the linkless octree. The size of the light index list is an indication
-for the number of non-empty leaf nodes. A smaller node size allows for a more fine grained
-representation of space, thus, partly overlapping lights will produce more deep octree nodes.
-The overlap within lights will create a difference in the light set contained in the nodes,
-and thus spawn a larger number of small octree nodes.
+The same cubic relationship can be seen between the memory usage and the node size. Both the
+combined number  of pixels used in the spatial hash functions of the linkless octree, fig \ref{},
+and the size of the Light Index List, fig \ref{}, show cubic growth with regards to a smaller
+node size. Figure \ref{} shows that the majority of the pixels used in the linkless octree
+are used within the deepest layers of the linkless octree. This indicates that
+a significant number of leaf nodes exist in the deepest layers of the linkless octree,
+when the node size decreases. This is further supported by the increase in size of the Light
+Index List. Each leaf node adds its set of light indices to the Light Index List. Thus the
+total size of the Light Index List is an indicator for the total number of leaf nodes.
+A smaller node size allows for a more fine-grained description of scene space. When lights
+partially overlap the leaf nodes can not be combined as their light index sets differ. A
+smaller node size will increase this effect, and more small octree nodes will be spawned
+as a result.
 
-The node size affects the size in all three dimensions of the node, thus if the node size
-is halved it will span $\frac{1}{2}^3 = 8$ times as many nodes. This cubic increase in
-nodes drives both the memory usage, and the construction time.
+The node size effects the size in all three dimensions of the node. Thus a reduction of the
+node size potentially leads to a cubic increase in number of nodes. This cubic increase
+of nodes is the source of the increase in number of nodes which drives up the memory usage
+and construction time.
+
+The influence of the starting depth on the construction time and the combined size of the textures
+is shown in figure \ref{} and \ref{} respectively. The construction time and memory usage
+are not effected by this change. However the memory overhead is reduced as
+the total number of required textures is reduced. Increasing the starting depth
+removes the shallowest layers of the linkless octree. These have a relatively small
+influence on the total memory usage and the construction time as the spatial hash functions
+are small compared to the deeper layers of the linkless octree. Thus a greater starting depth
+can be used to reduce the overhead of the textures and the total number of textures used,
+without significantly increasing the amount of nodes required. Furthermore
+removing the shallowest layers of the octree will reduce the number of memory accesses
+during the shading step, thus improving the performance during shading.
+
+% The results of the construction time for different number of lights as function of the
+% node size can be found in figure \ref{}. The construction time of the individual steps
+% are shown in figure \ref{}. We can clearly see a cubic relation between the node size
+% and the execution time. This leads to a significant increase when more than $8^3$ nodes per
+% light are used. This is primarily due to the construction time of the spatial hash functions
+% which represent the layers.
+
+% The same cubic relationship can be seen in the memory usage. Both the size of the light index
+% list and the combined number of pixels within the textures used by the linkless octree show
+% cubic growth with regards to a smaller node size. The majority of the memory is used in
+% the deepest layers of the linkless octree. The size of the light index list is an indication
+% for the number of non-empty leaf nodes. A smaller node size allows for a more fine grained
+% representation of space, thus, partly overlapping lights will produce more deep octree nodes.
+% The overlap within lights will create a difference in the light set contained in the nodes,
+% and thus spawn a larger number of small octree nodes.
+
+% The node size affects the size in all three dimensions of the node, thus if the node size
+% is halved it will span $\frac{1}{2}^3 = 8$ times as many nodes. This cubic increase in
+% nodes drives both the memory usage, and the construction time.
 
 \subsection{Execution Time and Light Calculations}
 
-Figure \ref{} shows the execution time for both the forward and deferred pipelines during
-a single evaluation of both hashed shading and tiled shading. Figure \ref{} shows the
-number of light calculations during a single simulation of the deferred pipeline for
-tiled, clustered and hashed shading.
+Figure \ref{} shows the execution time per frame for both the forward and deferred pipelines
+during a single simulation of both Tiled and Hashed Shading. Figure \ref{} shows the
+number of light calculations per frame during a single simulation of the deferred pipeline for
+Tiled, Clustered and Hashed Shading.
 
-In the Deferred Pipeline we can see a similar performance for Tiled and Hashed Shading.
-However Hashed Shading requires a factor two less light calculations. Due to the simple
-fragment shader used, this difference in number of light calculations is not significant
-enough to create a difference in execution time. If a more complex shader would be used,
-the difference in number of light calculations should be noticeable. The Forward Shading
-pipeline has a significant amount of overdraw, thus a larger number of fragments per
-pixel is evaluated. In this situation Hashed Shading performs about two times faster,
-in line with the results from the reduction in number of light calculations.
+In the deferred pipeline a similar performance with regards to the execution time can be observed for
+both Tiled and Hashed Shading, even though the Hashed Shading implementation requires only
+half of the light calculations. This is a result of the simplicity of the used fragment shader.
+The bottleneck in this case is not the shading pass but the geometry pass. The change in number
+of calculations does not influence the geometry pass, thus performance is comparable. When
+the complexity of the shader, and therefore the amount of work during the shading pass, is
+increased the difference in the number of light calculations should become noticeable.
+The Forward Hashed Shading implementation does perform about twice as well as the Forward
+Tiled Shading implementation, which is in line with the reduction of the number of light
+calculations achieved with Hashed Shading. The forward pipeline has significant overdraw,
+thus per pixel multiple fragments are evaluated. This amplifies the influence of the
+reduction of the number of light calculations.
 
-For small node sizes the Hashed Shading algorithm approaches the reduction in light calculations
-of Clustered Shading. While Clustered Shading still requires less light calculations, the
-difference in minimal. A further reduction in node size should reduce the gap in light calculations.
+For small node size the reduction of light calculations achieved by Hashed Shading approaches
+that of Clustered Shading. When the node size would be reduced further, it should equate
+and potentially surpass Clustered Shading.
+
+% Figure \ref{} shows the execution time for both the forward and deferred pipelines during
+% a single evaluation of both hashed shading and tiled shading. Figure \ref{} shows the
+% number of light calculations during a single simulation of the deferred pipeline for
+% tiled, clustered and hashed shading.
+
+% In the Deferred Pipeline we can see a similar performance for Tiled and Hashed Shading.
+% However Hashed Shading requires a factor two less light calculations. Due to the simple
+% fragment shader used, this difference in number of light calculations is not significant
+% enough to create a difference in execution time. If a more complex shader would be used,
+% the difference in number of light calculations should be noticeable. The Forward Shading
+% pipeline has a significant amount of overdraw, thus a larger number of fragments per
+% pixel is evaluated. In this situation Hashed Shading performs about two times faster,
+% in line with the results from the reduction in number of light calculations.
+
+% For small node sizes the Hashed Shading algorithm approaches the reduction in light calculations
+% of Clustered Shading. While Clustered Shading still requires less light calculations, the
+% difference in minimal. A further reduction in node size should reduce the gap in light calculations.
 
 In figure \ref{} the average execution time per frame for the Forward and Deferred pipelines as
 function of the number of lights is plotted. All of the algorithms scale linearly with the
-number of lights. The results are comparable to those of the single simulation. For Deferred
+number of lights. The results are comparable to those observed for the single simulation. For Deferred
 Shading the performance increase of Hashed Shading is similar to that of Tiled Shading. In
-the Forward pipeline, again an improvement of a factor is noticeable.
+the Forward pipeline, again an improvement of a factor two is noticeable.
 The number of light calculations, figure \ref{}, shows that the reduction in calculation time
-is again a direct result of the reduction of number of light calculations. The smallest node
+is a direct result of the reduction of number of light calculations. The smallest node
 size shows a comparable curve to that of Clustered Shading.
 
 The behaviour with regards to the resolution is shown in figure \ref{} and \ref{}.
