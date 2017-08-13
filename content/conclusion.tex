@@ -15,11 +15,11 @@ depend directly on the direction.
 
 However there are still two major problems with the current Hashed Shading implementation.
 The memory footprint increases cubicly with a decreasing node size. This leads
-to unacceptable memory requirements for small node sizes. Secondly dynamic lights
+to unacceptable memory requirements for small node sizes. Secondly, dynamic lights
 are not currently not supported within the Hashed Shading implementation. Adding
 this support would increase computation time during shading.
 
-Overall it can be concluded that camera-independent light assignment is a viable strategy.
+Overall, it can be concluded that camera-independent light assignment is a viable strategy.
 The decoupling of resolution could play a role with the trend of increasing screen resolutions.
 Future work would need to solve the memory requirements and allow for efficient support
 of dynamic lights in order for Hashed Shading and similar algorithms to be competitive with
@@ -64,28 +64,46 @@ the octree data structure.
 
 \input{./img/tex/vo-geometrie.tex}
 
-An important insight Clustered Shading leverages to reduce the memory usage is that samples
-will only be generated in clusters that contain geometry. Thus there is no need to construct
-clusters that will not generate samples. A similar approach can be used in Hashed Shading.
-A second octree with the same size and origin can be constructed for the geometry, where in
-the leaf node is stored if the corresponding volume contains geometry. This octree can then
-be used to determine whether a node has to be saved or not. Only if a node contains geometry
-it needs to be physically saved, and only if the node contains both lights and geometry it
-needs to be saved in the second spatial hash function. Thus such an octree could greatly
-reduce the number of nodes as is shown in figure \ref{fig:vo-geometrie}.
+An important insight Clustered Shading uses to reduce memory usage is that only clusters
+which contain geometry will potentially be queried. Thus only clusters that contain potential
+samples need to be constructed and kept in memory. This reduces the total number of clusters
+required by Clustered Shading. This insight can also be leveraged by Hashed Shading. There
+is no need to keep nodes which contain no geometry in memory as they will never be queried.
+If a second octree with the same origin and size of the screen octree is constructed, where
+the leaf nodes specify whether the corresponding volumes contains geometry, then this octree
+can be used to filter out nodes which will not be queried. Only if a node contains both
+geometry and light information, it needs to be stored in the linkless octree. Thus such
+a geometry octree could be used to greatly reduce the number of nodes in the linkless octree as
+is shown in figure \ref{fig:vo-geometrie}.
 
-A second advantage of this approach would be that a smaller node size would not directly
-cubicly increase the number of nodes. As a smaller node size would also increase the
-precision with which the geometry is represented, it would actually increase the amount of
-empty space, thus reducing the amount of nodes that need to be kept in memory.
+A second advantage of such an approach would be that the number of nodes would not necessarily
+be cubicly dependent on the node size. A smaller node size would also increase the precision
+with which geometry is represented, thus it would reduce the space which contains geometry and
+therefore reduce the increase in number of nodes which need to be represented within the linkless
+octree.
+
+% An important insight Clustered Shading leverages to reduce the memory usage is that samples
+% will only be generated in clusters that contain geometry. Thus there is no need to construct
+% clusters that will not generate samples. A similar approach can be used in Hashed Shading.
+% A second octree with the same size and origin can be constructed for the geometry, where in
+% the leaf node is stored if the corresponding volume contains geometry. This octree can then
+% be used to determine whether a node has to be saved or not. Only if a node contains geometry
+% it needs to be physically saved, and only if the node contains both lights and geometry it
+% needs to be saved in the second spatial hash function. Thus such an octree could greatly
+% reduce the number of nodes as is shown in figure \ref{fig:vo-geometrie}.
+
+% A second advantage of this approach would be that a smaller node size would not directly
+% cubicly increase the number of nodes. As a smaller node size would also increase the
+% precision with which the geometry is represented, it would actually increase the amount of
+% empty space, thus reducing the amount of nodes that need to be kept in memory.
 
 Lastly the conditions required for a set of sibling nodes to be combined into a single
-parent node could be weakened. Since nodes which do not contain any geometry data will
-never be queried, an arbitrary value could be assigned to them, without influencing the
-performance of Hashed Shading. The current condition requires all the sibling nodes to
-have the same set of lights, before they can be combined into a single leaf node. With
-this optimalisation this can be reduced to all sibling nodes which contain geometry
-need to contain the same set of lights. This would further reduce the number of nodes
+leaf node in the preceding layer could be weakened. Since nodes which do not contain any
+geometry data will never be queried, an arbitrary value could be assigned to them, without
+influencing the performance of Hashed Shading. The current condition requires all the sibling
+nodes to have the same set of lights, before they can be combined into a single leaf node. With
+this optimisation this can be weakened to requiring to all sibling nodes which contain geometry
+to contain an equal set of lights. This would further reduce the number of nodes
 needed to represent the scene space.
 
 \subsubsection{Subdivision of Space}
@@ -101,10 +119,11 @@ only load the visible chunks into memory. If the chunk size is set to be similar
 frustum, at least eight chunks are required to cover the view frustum at any point.
 This could be extended to 27 chunks if camera rotations are common. In this case no new chunks
 will have to be loaded in when the camera orientation changes, thus reducing the texture
-bandwidth.
+bandwidth. When these chunks require less memory than the complete representation, the memory
+usage is reduced.
 
 A potential problem of this approach is the large number of textures required to represent
-the octree. Each layer of each chunk would require two separate texture, four if the layer
+the octree. Each layer of each chunk would require two separate textures, four if the layer
 also contains leaf nodes. If 27 chunks are used, and each chunk uses several layers, this
 would quickly lead to an infeasible amount of textures. However looking at the results of
 the memory usage, it can be shown that the majority of the memory is used in the deeper
@@ -112,19 +131,19 @@ layers, which contain a large number of nodes, and that the shallow layers are r
 small. An alternative would be to only subdivide the space into chunks at a certain depth.
 In the current implementation each layer represents the full scene space, however there is
 no obstacle into subdividing this space into smaller chunks. If we would subdivide layer $l + 1$
-into chunks, then the branch nodes in layer $l$ would only require a single pointer to identify
+into chunks, then the branch nodes in layer $l$ would only require a single value to identify
 the chunk in which the child node lays. This would make it possible to reduce the memory usage
-by the deeper layers, while keeping the number of changing textures to a minimum.
+in the deeper layers, while keeping the number of changing textures to a minimum.
 The possible options are shown in figure \ref{fig:vo-textures}.
 
-Finally the chunk approach would make it trivial to support level of detail. Objects closer
+Finally, the chunk approach would make it trivial to support level of detail. Objects close
 to the camera will generally take up more screen space than objects further away from the camera,
 due to perspective. Thus if the same reduction of light calculations is created for objects
 far away from the camera as for objects close by the camera, the amount of memory used to reduce
 the number of lights for samples far away will be relatively greater. By reducing the amount of
 memory used for space further away from the camera, and increasing it for space close to the
 camera, a greater reduction of light calculations overall can be achieved. In Clustered
-Shading this is done by scaling the cluster volume with regards to the camera-z-axis.
+Shading this is done by scaling the cluster volume with regards to the camera's $z$-axis.
 
 The linkless octree could support this level of detail by defining multiple spatial hash functions
 per layer. When a chunk is loaded close to the camera, the regular spatial hash functions would
@@ -137,14 +156,14 @@ and one spatial hash function only containing leaf nodes would have to be define
 The second issue of the current implementation of Hashed Shading is the lack of support for
 dynamic lights. The downside of not rebuilding data structures per frame is that changes
 in lights are not implicitly reflected in the data structures any more. Supporting dynamic
-lights would thusly increase the amount of work per frame.
+lights would thus always increase the amount of work per frame.
 Games and other real-time applications generally have a high frame rate, between 30 and 60 frames
-per second, thus changes in lights are generally small and local. This could be leveraged
+per second, therefore changes in lights are generally small and local. This could be leveraged
 to efficiently update the Hashed Shading data structures.
-The bottleneck operation in the construction of Hashed Shading is the construction of the
-spatial hash functions of the layers of the octree. These operations thus need to be kept
-to a minimum. A spatial hash function needs to be rebuild if a new node is added that collides
-with an existing value:
+The bottleneck operation in the construction of the Hashed Shading data structures is the construction of the
+spatial hash functions of the layers of the octree. In order to efficiently support dynamic lights,
+these operations thus need to be kept to a minimum. A spatial hash function needs to be rebuild if
+a new node is added that collides with an existing value:
 
 \begin{equation*}
     H\left[ \mathit{h}_0\left(\mathbf{k}\right) + \Phi\left[ \mathit{h}_1\left(\mathbf{k}\right) \right] \right] \neq \varnothing 
@@ -152,27 +171,30 @@ with an existing value:
 
 \noindent where $\mathbf{k}$ is the position of a new node. In all other cases the existing
 textures can be updated without a complete recalculation of the spatial hash function of a layer.
-A node is added to the second spatial hash function if a light index gets added to a previously empty
-node. When a leaf node gets subdivided into eight child nodes, a new node is added to the first
+
+There are two situations which require the addition of nodes in layers. If a light index is added
+to a previously empty node, a new data element needs to be added to the data hash function of a layer.
+When a leaf node gets subdivided into eight child nodes, a new node is added to the first
 spatial hash function of the next layer describing these eight child nodes, and for each of the child
-nodes that contain data, the data nodes are added to the second spatial hash function of the next layer.
-The subdivision of nodes thusly is most likely the main source of recalculations.
+nodes that contain data, the data nodes are added to the data spatial hash function of the next layer.
+The subdivision of nodes therefore is the most likely source of recalculations.
 
-It might prove efficient to extend the size of the hash tables slightly to increase the amount
-of empty space. While this would increase the memory foot print, it could greatly reduce the
-number of times a spatial hash function has to be recalculated. The effects of such a change
-would be useful to explore.
+It might prove efficient to slightly extend the size of the hash tables to increase the amount
+of empty space within them. While this would increase the memory foot print, it could greatly reduce the
+number of times a spatial hash function needs to be recalculated. The effects of such a change
+would be interesting to explore.
 
-In the current implementation the whole space is globally linked to the same layers, thus a local
-change of a single light might require the complete space to be recalculated. Thus currently we
-can not take advantage of the local nature of light changes. If we were to combine the support
-of dynamic lights with the chunk optimalisation, we only have to update the chunk which is affected
-by a light change, reducing the space affected by that change. Furthermore, because the construction
+In the current implementation the whole space of each layer is globally linked, therefore a local
+change of a single light might require the complete space to be recalculated. Currently the implementation
+can not take advantage of the local nature of light changes. If the support of dynamic lights is combined
+with the chunk optimisation, only the chunks affected by a light change need to be updated, reducing the
+space affected by that change. Furthermore, because the construction
 time of a spatial hash functions is directly linked to its size, recalculating the spatial hash function
-of a chunk would be smaller than recalculating the spatial hash function of the complete space, thus it
-would further reduce the amount of time needed to update.
+of a chunk would be smaller than recalculating the spatial hash function of the complete space, 
+further reducing the amount of time needed to update.
 Lastly, only chunks that are currently in memory need to be updated immediately, as changes to these
 chunks are directly visible. Changes to chunks that are not currently loaded on the GPU will not be visible
-until this chunk is loaded on the GPU. These changes can then be incorporated in loading the chunk into
-memory, thus reducing bandwidth, and potentially execution time.
+until the chunk is loaded in GPU memory. Changes to invisible chunks can be queued, and only executed
+once the chunk has to be loaded into memory. This would reduce the bandwidth and potentially the
+execution time.
 

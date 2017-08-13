@@ -1,0 +1,76 @@
+%% Creator: Inkscape inkscape 0.92.1, www.inkscape.org
+%% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
+%% Accompanies image file 'NodeSize_pipers-alley_58.pdf' (pdf, eps, ps)
+%%
+%% To include the image in your LaTeX document, write
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics{<filename>.pdf}
+%% To scale the image, write
+%%   \def\svgwidth{<desired width>}
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics[width=<desired width>]{<filename>.pdf}
+%%
+%% Images with a different path to the parent latex file can
+%% be accessed with the `import' package (which may need to be
+%% installed) using
+%%   \usepackage{import}
+%% in the preamble, and then including the image with
+%%   \import{<path to file>}{<filename>.pdf_tex}
+%% Alternatively, one can specify
+%%   \graphicspath{{<path to file>/}}
+%% 
+%% For more information, please see info/svg-inkscape on CTAN:
+%%   http://tug.ctan.org/tex-archive/info/svg-inkscape
+%%
+\begingroup%
+  \makeatletter%
+  \providecommand\color[2][]{%
+    \errmessage{(Inkscape) Color is used for the text in Inkscape, but the package 'color.sty' is not loaded}%
+    \renewcommand\color[2][]{}%
+  }%
+  \providecommand\transparent[1]{%
+    \errmessage{(Inkscape) Transparency is used (non-zero) for the text in Inkscape, but the package 'transparent.sty' is not loaded}%
+    \renewcommand\transparent[1]{}%
+  }%
+  \providecommand\rotatebox[2]{#2}%
+  \ifx\svgwidth\undefined%
+    \setlength{\unitlength}{501.58375bp}%
+    \ifx\svgscale\undefined%
+      \relax%
+    \else%
+      \setlength{\unitlength}{\unitlength * \real{\svgscale}}%
+    \fi%
+  \else%
+    \setlength{\unitlength}{\svgwidth}%
+  \fi%
+  \global\let\svgwidth\undefined%
+  \global\let\svgscale\undefined%
+  \makeatother%
+  \begin{picture}(1,0.70735231)%
+    \put(0,0){\includegraphics[width=\unitlength,page=1]{./img/raw/hs-nodesize-construction-time/NodeSize_pipers-alley_58.pdf}}%
+    \put(0.19683901,0.0454443){\color[rgb]{0.14901961,0.14901961,0.14901961}\rotatebox{45}{\makebox(0,0)[lb]{\smash{0.25}}}}%
+    \put(0.42325402,0.05328383){\color[rgb]{0.14901961,0.14901961,0.14901961}\rotatebox{45}{\makebox(0,0)[lb]{\smash{0.5}}}}%
+    \put(0.64574927,0.05328383){\color[rgb]{0.14901961,0.14901961,0.14901961}\rotatebox{45}{\makebox(0,0)[lb]{\smash{1.0}}}}%
+    \put(0.86824451,0.05328383){\color[rgb]{0.14901961,0.14901961,0.14901961}\rotatebox{45}{\makebox(0,0)[lb]{\smash{2.0}}}}%
+    \put(0.54065497,0.0189702){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{Knoop grootte}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=2]{./img/raw/hs-nodesize-construction-time/NodeSize_pipers-alley_58.pdf}}%
+    \put(0.08170869,0.08979061){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{0.0}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=3]{./img/raw/hs-nodesize-construction-time/NodeSize_pipers-alley_58.pdf}}%
+    \put(0.08170869,0.16160075){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{2.5}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=4]{./img/raw/hs-nodesize-construction-time/NodeSize_pipers-alley_58.pdf}}%
+    \put(0.08170869,0.23341083){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{5.0}}}%
+    \put(0.08170869,0.30522094){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{7.5}}}%
+    \put(0.08170869,0.37703105){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{10.0}}}%
+    \put(0.08170869,0.44884116){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{12.5}}}%
+    \put(0.08170869,0.52065128){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{15.0}}}%
+    \put(0.08170869,0.59246139){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{17.5}}}%
+    \put(0.08170869,0.66427149){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{20.0}}}%
+    \put(0.03031928,0.3949618){\color[rgb]{0.14901961,0.14901961,0.14901961}\rotatebox{90}{\makebox(0,0)[b]{\smash{Constructietijd (ms)}}}}%
+    \put(0.9067298,0.660725){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lb]{\smash{Laag 3}}}%
+    \put(0.9067298,0.63223088){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lb]{\smash{Laag 2}}}%
+    \put(0.9067298,0.60373676){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lb]{\smash{Laag 1}}}%
+    \put(0.9067298,0.57524264){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lb]{\smash{Laag 0}}}%
+  \end{picture}%
+\endgroup%

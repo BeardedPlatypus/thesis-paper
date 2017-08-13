@@ -8,7 +8,7 @@ in the view frustum generates samples to be shaded, regardless of whether these
 are visible or occluded. These samples are all shaded and only after executing
 the light calculations the visibility of pixels is determined in the per-pixel
 operations. In order to shade only the visible samples, the visibility has to be
-determined before shading. The concept to do so was introduced in hardware
+determined before shading. The concept to achieve this was introduced in hardware
 design in 1988\cite{deering1988triangle}. A general purpose strategy to achieve
 this deferred shading was introduced in 1990, making use of so called
 geometry buffers or GBuffers\cite{saito1990comprehensible}. The idea
@@ -27,7 +27,7 @@ of light calculations, as not every light will be evaluated for every pixel.
 This optimisation is called the stencil-optimisation\cite{doi:10.1080/10867651.2003.10487587}.
 This approach has two downsides. It requires a significant number of memory
 accesses, as per generated sample the shading data has to be retrieved from the
-GBuffers. Also the summation of shading contributions happens in a framebuffer.
+GBuffers. Also, the summation of shading contributions happens in a framebuffer.
 This reduces the precision as the framebuffer's precision generally does not
 have as much bits as the GPU registers.
 
@@ -74,8 +74,11 @@ $z$-values for each tile. These can then be used to reject any light which falls
 outside of these boundaries, thus reducing the number of lights associated with
 a tile.
 
-This algorithm has been implemented in several game engines and games\cite{balestra2008technology, swoboda2009deferred, balestra2008technology},
-including Unreal\cite{karis2013real}, frostbite\cite{andersson2009parallel, magnusson2011lighting} and unity\cite{pranckevivcius2014physically}.
+This algorithm has been implemented in several game engines and
+games\cite{balestra2008technology, swoboda2009deferred, balestra2008technology},
+including Unreal\cite{karis2013real},
+frostbite\cite{andersson2009parallel, magnusson2011lighting}
+and unity\cite{pranckevivcius2014physically}.
 
 % Tiled Shading was designed to alleviate the memory bandwidth bottleneck of
 % Deferred Shading with the stencil-optimalisation. The concept is to divide
@@ -100,7 +103,7 @@ including Unreal\cite{karis2013real}, frostbite\cite{andersson2009parallel, magn
 \subsection{Clustered Shading}
 
 Clustered Shading\cite{olsson2012clustered} extends Tiled Shading by subdividing the
-volumes with the tiles further. The tile volumes are subdivided with regards to the
+volumes associated with the tiles further. The tile volumes are subdivided with regards to the
 camera's $z$-axis to obtain cube-like sub frustums. These sub frustums can be further
 partitioned based on attributes such as the normals. These higher dimension tiles are
 called clusters.
@@ -120,7 +123,8 @@ of each of these lights are evaluated similarly to Tiled shading.
 This subdivision of the view frustum is more fine-grained than that of Tiled Shading, and
 thus reduces the number of light calculations per pixel to a greater extend.
 Clustered Shading is used in several modern games, including in the Avalance
-game engine\cite{}, on which games as Just Cause 2 and 3\cite{persson2013practical}, Doom 4\cite{Tatarchuk:2016:ARR:2897826.2940292}.
+game engine, on which games as Just Cause 2 and 3\cite{persson2013practical},
+Doom 4\cite{Tatarchuk:2016:ARR:2897826.2940292}.
 
 % Clustered Shading\cite{} extends Tiled Shading by subdividing the space associated
 % with each tile further. The tiles are subdivided exponentially in the camera
@@ -147,7 +151,7 @@ game engine\cite{}, on which games as Just Cause 2 and 3\cite{persson2013practic
 \subsection{Perfect Spatial Hashing}
 
 In order to efficiently subdivide the scene space without using a large amount
-of memory an octree data structure is used. A straightforward implementation
+of memory, an octree data structure is used. A straightforward implementation
 using pointers would require a large number of control structures. Such control
 structures would degrade the performance of the data structure on the GPU\cite{Han:2011:RBD:1964179.1964184}.
 A pointer based data structure would therefore be infeasible for a light assignment

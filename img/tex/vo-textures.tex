@@ -21,7 +21,7 @@
                                 ]
 
 
-  \begin{adjustbox}{minipage=\textwidth, scale=0.425}
+  \begin{adjustbox}{minipage=\textwidth, scale=0.445}
     \centering
 \begin{tikzpicture}
      \node at (0.5cm * 0 + 0.1cm * 0, 0) (H) [array_element, fill=LightColor] {};
@@ -166,20 +166,20 @@
     }
     \node at (-2.0cm, 0.6cm) (line-1-l) {};
     \node at (14cm, 0.6cm) (line-1-r) {};
-    \draw[-, thin] (line-1-l.center) -- (line-1-r.center) node[pos=0.0125, above right] {\small Currently};
+    \draw[-, thin] (line-1-l.center) -- (line-1-r.center) node[pos=0.0125, above right] {\huge Currently};
     
     \node at (-2.0cm, 0.6cm - 3cm) (line-1-l) {};
     \node at (14cm, 0.6cm - 3cm) (line-1-r) {};
-    \draw[-, thin] (line-1-l.center) -- (line-1-r.center) node[pos=0.0125, above right] {\small Naive};
+    \draw[-, thin] (line-1-l.center) -- (line-1-r.center) node[pos=0.0125, above right] {\huge Naive};
     
 \node at (-2.0cm, 0.6cm - 5cm - 3 * 1.25cm) (line-1-l) {};
 \node at (14cm, 0.6cm - 5cm - 3 * 1.25cm) (line-1-r) {};
-    \draw[-, thin] (line-1-l.center) -- (line-1-r.center) node[pos=0.0125, above right] {\small Proposal};
+    \draw[-, thin] (line-1-l.center) -- (line-1-r.center) node[pos=0.0125, above right] {\huge Proposal};
 
-\node at (0.25cm, 1.5cm) (laag0) {\small layer $0$};
-\node at (0.25cm + 2.25cm, 1.5cm) (laag0) {\small layer $1$};
-\node at (0.25cm + 6.25cm, 1.5cm) (laag0) {\small layer $i$};
-\node at (0.25cm + 10.25cm, 1.5cm) (laag0) {\small layer $i + 1$};
+\node at (0.25cm, 1.8cm) (laag0) {\large layer $0$};
+\node at (0.25cm + 2.25cm, 1.8cm) (laag0) {\large layer $1$};
+\node at (0.25cm + 6.25cm, 1.8cm) (laag0) {\large layer $i$};
+\node at (0.25cm + 10.25cm, 1.8cm) (laag0) {\large layer $i + 1$};
 
 \end{tikzpicture}
 \end{adjustbox}

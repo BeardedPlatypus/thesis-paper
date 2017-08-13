@@ -1,0 +1,75 @@
+%% Creator: Inkscape inkscape 0.92.1, www.inkscape.org
+%% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
+%% Accompanies image file 'NodeSize_spaceship-indoor_70.pdf' (pdf, eps, ps)
+%%
+%% To include the image in your LaTeX document, write
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics{<filename>.pdf}
+%% To scale the image, write
+%%   \def\svgwidth{<desired width>}
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics[width=<desired width>]{<filename>.pdf}
+%%
+%% Images with a different path to the parent latex file can
+%% be accessed with the `import' package (which may need to be
+%% installed) using
+%%   \usepackage{import}
+%% in the preamble, and then including the image with
+%%   \import{<path to file>}{<filename>.pdf_tex}
+%% Alternatively, one can specify
+%%   \graphicspath{{<path to file>/}}
+%% 
+%% For more information, please see info/svg-inkscape on CTAN:
+%%   http://tug.ctan.org/tex-archive/info/svg-inkscape
+%%
+\begingroup%
+  \makeatletter%
+  \providecommand\color[2][]{%
+    \errmessage{(Inkscape) Color is used for the text in Inkscape, but the package 'color.sty' is not loaded}%
+    \renewcommand\color[2][]{}%
+  }%
+  \providecommand\transparent[1]{%
+    \errmessage{(Inkscape) Transparency is used (non-zero) for the text in Inkscape, but the package 'transparent.sty' is not loaded}%
+    \renewcommand\transparent[1]{}%
+  }%
+  \providecommand\rotatebox[2]{#2}%
+  \ifx\svgwidth\undefined%
+    \setlength{\unitlength}{504.366562bp}%
+    \ifx\svgscale\undefined%
+      \relax%
+    \else%
+      \setlength{\unitlength}{\unitlength * \real{\svgscale}}%
+    \fi%
+  \else%
+    \setlength{\unitlength}{\svgwidth}%
+  \fi%
+  \global\let\svgwidth\undefined%
+  \global\let\svgscale\undefined%
+  \makeatother%
+  \begin{picture}(1,0.70344953)%
+    \put(0,0){\includegraphics[width=\unitlength,page=1]{./img/raw/hs-nodesize-construction-time/NodeSize_spaceship-indoor_70.pdf}}%
+    \put(0.20127041,0.04519357){\color[rgb]{0.14901961,0.14901961,0.14901961}\rotatebox{45}{\makebox(0,0)[lb]{\smash{0.25}}}}%
+    \put(0.42643618,0.05298984){\color[rgb]{0.14901961,0.14901961,0.14901961}\rotatebox{45}{\makebox(0,0)[lb]{\smash{0.5}}}}%
+    \put(0.64770383,0.05298984){\color[rgb]{0.14901961,0.14901961,0.14901961}\rotatebox{45}{\makebox(0,0)[lb]{\smash{1.0}}}}%
+    \put(0.86897147,0.05298984){\color[rgb]{0.14901961,0.14901961,0.14901961}\rotatebox{45}{\makebox(0,0)[lb]{\smash{2.0}}}}%
+    \put(0.54318937,0.01886553){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{Knoop grootte}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=2]{./img/raw/hs-nodesize-construction-time/NodeSize_spaceship-indoor_70.pdf}}%
+    \put(0.08677531,0.0892952){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{0}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=3]{./img/raw/hs-nodesize-construction-time/NodeSize_spaceship-indoor_70.pdf}}%
+    \put(0.08677531,0.16451857){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{200}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=4]{./img/raw/hs-nodesize-construction-time/NodeSize_spaceship-indoor_70.pdf}}%
+    \put(0.08677531,0.23974198){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{400}}}%
+    \put(0.08677531,0.31496538){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{600}}}%
+    \put(0.08677531,0.39018876){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{800}}}%
+    \put(0.08677531,0.46541215){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{1000}}}%
+    \put(0.08677531,0.54063554){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{1200}}}%
+    \put(0.08677531,0.61585893){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{1400}}}%
+    \put(0.030152,0.39278263){\color[rgb]{0.14901961,0.14901961,0.14901961}\rotatebox{90}{\makebox(0,0)[b]{\smash{Constructietijd (ms)}}}}%
+    \put(0.9072444,0.65707949){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lb]{\smash{Laag 3}}}%
+    \put(0.9072444,0.62874258){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lb]{\smash{Laag 2}}}%
+    \put(0.9072444,0.60040568){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lb]{\smash{Laag 1}}}%
+    \put(0.9072444,0.57206878){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lb]{\smash{Laag 0}}}%
+  \end{picture}%
+\endgroup%

@@ -1,0 +1,79 @@
+%% Creator: Inkscape inkscape 0.92.1, www.inkscape.org
+%% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
+%% Accompanies image file 'resolution_pipers-alley.pdf' (pdf, eps, ps)
+%%
+%% To include the image in your LaTeX document, write
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics{<filename>.pdf}
+%% To scale the image, write
+%%   \def\svgwidth{<desired width>}
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics[width=<desired width>]{<filename>.pdf}
+%%
+%% Images with a different path to the parent latex file can
+%% be accessed with the `import' package (which may need to be
+%% installed) using
+%%   \usepackage{import}
+%% in the preamble, and then including the image with
+%%   \import{<path to file>}{<filename>.pdf_tex}
+%% Alternatively, one can specify
+%%   \graphicspath{{<path to file>/}}
+%% 
+%% For more information, please see info/svg-inkscape on CTAN:
+%%   http://tug.ctan.org/tex-archive/info/svg-inkscape
+%%
+\begingroup%
+  \makeatletter%
+  \providecommand\color[2][]{%
+    \errmessage{(Inkscape) Color is used for the text in Inkscape, but the package 'color.sty' is not loaded}%
+    \renewcommand\color[2][]{}%
+  }%
+  \providecommand\transparent[1]{%
+    \errmessage{(Inkscape) Transparency is used (non-zero) for the text in Inkscape, but the package 'transparent.sty' is not loaded}%
+    \renewcommand\transparent[1]{}%
+  }%
+  \providecommand\rotatebox[2]{#2}%
+  \ifx\svgwidth\undefined%
+    \setlength{\unitlength}{498.80563055bp}%
+    \ifx\svgscale\undefined%
+      \relax%
+    \else%
+      \setlength{\unitlength}{\unitlength * \real{\svgscale}}%
+    \fi%
+  \else%
+    \setlength{\unitlength}{\svgwidth}%
+  \fi%
+  \global\let\svgwidth\undefined%
+  \global\let\svgscale\undefined%
+  \makeatother%
+  \begin{picture}(1,0.68934292)%
+    \put(0,0){\includegraphics[width=\unitlength,page=1]{./img/raw/hs-exec-resolution/deferred/resolution_pipers-alley.pdf}}%
+    \put(0.20253065,0.04713324){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{500}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=2]{./img/raw/hs-exec-resolution/deferred/resolution_pipers-alley.pdf}}%
+    \put(0.38102321,0.04713324){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{1000}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=3]{./img/raw/hs-exec-resolution/deferred/resolution_pipers-alley.pdf}}%
+    \put(0.55951574,0.04713324){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{1500}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=4]{./img/raw/hs-exec-resolution/deferred/resolution_pipers-alley.pdf}}%
+    \put(0.73800828,0.04713324){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{2000}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=5]{./img/raw/hs-exec-resolution/deferred/resolution_pipers-alley.pdf}}%
+    \put(0.91650081,0.04713324){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{2500}}}%
+    \put(0.53809666,0.01907586){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{Resolutie (px)}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=6]{./img/raw/hs-exec-resolution/deferred/resolution_pipers-alley.pdf}}%
+    \put(0.07659421,0.13178914){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{0}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=7]{./img/raw/hs-exec-resolution/deferred/resolution_pipers-alley.pdf}}%
+    \put(0.07659421,0.2612738){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{100}}}%
+    \put(0.07659421,0.39075846){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{200}}}%
+    \put(0.07659421,0.52024309){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{300}}}%
+    \put(0.07659421,0.64972772){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{400}}}%
+    \put(0.03048815,0.37521254){\color[rgb]{0.14901961,0.14901961,0.14901961}\rotatebox{90}{\makebox(0,0)[b]{\smash{Executietijd (ms)}}}}%
+    \put(0.16480493,0.64251543){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lb]{\smash{Naief}}}%
+    \put(0.16480493,0.61415707){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lb]{\smash{Tiled - 32}}}%
+    \put(0.16480493,0.5857987){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lb]{\smash{Hashed - 0.25}}}%
+    \put(0.16480493,0.55744034){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lb]{\smash{Hashed - 0.5}}}%
+    \put(0.16480493,0.52908197){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lb]{\smash{Hashed - 1.0}}}%
+    \put(0.16480493,0.50072361){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lb]{\smash{Hashed - 2.0}}}%
+    \put(0.16480493,0.47236523){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lb]{\smash{Hashed - 3.0}}}%
+  \end{picture}%
+\endgroup%

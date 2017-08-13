@@ -35,10 +35,10 @@
 \begin{adjustbox}{minipage=\textwidth, scale=0.5}
   \centering
   \begin{tikzpicture}
-    \node at (-4.cm, 4cm) (light_list_name) [anchor=west] {Global Light List:};
-    \node at (-4.cm, 2cm) (light_list_name) [anchor=west] {Light Index List:};
-    \node at (-4.cm, -1.5cm) (light_list_name) [anchor=west] {Octree:};
-    \node at (2.75cm, -1.5cm) (light_list_name) [anchor=west] {Spatial Hash Functions:};
+    \node at (-4.cm, 4cm) (light_list_name) [anchor=west] {\LARGE Global Light List:};
+    \node at (-4.cm, 2cm) (light_list_name) [anchor=west] {\LARGE Light Index List:};
+    \node at (-4.cm, -1.5cm) (light_list_name) [anchor=west] {\LARGE Octree:};
+    \node at (2.75cm, -1.5cm) (light_list_name) [anchor=west] {\LARGE Spatial Hash Functions:};
     
 
     \foreach \l in {0,...,6} {
@@ -161,8 +161,8 @@
     \node at (-3.25cm + 10.75cm , -2cm + 1.5cm) (grid_l) [] {};
     \node at (-1.25cm + 10.75cm, -2cm + 1.5cm) (grid_r) [] {};
     \draw (grid_l.center) -- (grid_r.center);
-    \node at (-2.25cm + 10.75cm, -1.5cm + 1.5cm) [] { offset: $\mathit{k}$ };
-    \node at (-2.25cm + 10.75cm, -2.5cm + 1.5cm) [] { size: $\mathit{1}$ };
+    \node at (-2.25cm + 10.75cm, -1.5cm + 1.5cm) [] { \Large offset: $\mathit{k}$ };
+    \node at (-2.25cm + 10.75cm, -2.5cm + 1.5cm) [] { \Large size: $\mathit{1}$ };
 
     \node at (-3.25cm + 10.75cm, -3cm + 1.55cm) (node_big_1) {};
     \node at (-1.25cm + 10.75cm, -3cm + 1.55cm) (node_big_2) {};

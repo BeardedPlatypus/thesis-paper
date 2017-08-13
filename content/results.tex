@@ -12,18 +12,21 @@ reduction in execution time and number of light calculations.
 \subsection{Construction Time and Memory Usage}
 
 The results of the construction time as function of the node size relative to the radius
-of the lights for different number of lights can be found in figure \ref{}. The
-construction time for individual functions for the largest sets of lights can be found in
-figure \ref{}. A cubic relationship between the node size and the construction time can be
+of the lights for different number of lights can be found in
+figure \ref{fig:hs-ns-construction-time}. The construction time for individual functions
+for the largest sets of lights can be found in figure \ref{fig:hs-layered-exec}. A cubic
+relationship between the node size and the construction time can be
 clearly observed. This leads to a  significant increase of construction time when more
 than $8^3$ nodes are required to contain a light volume.
 This increase in construction time is primarily due to the construction of the spatial
 hash functions representing the layers of the linkless octree.
 
 The same cubic relationship can be seen between the memory usage and the node size. Both the
-combined number  of pixels used in the spatial hash functions of the linkless octree, fig \ref{},
-and the size of the Light Index List, fig \ref{}, show cubic growth with regards to a smaller
-node size. Figure \ref{} shows that the majority of the pixels used in the linkless octree
+combined number  of pixels used in the spatial hash functions of the linkless octree,
+fig \ref{fig:hs-ns-memory}, and the size of the Light Index List, fig \ref{fig:hs-ns-light-indices},
+show cubic growth with regards to a smaller node size. Figure \ref{fig:hs-layered-mem:octree}
+and \ref{fig:hs-layered-mem:data} show that
+the majority of the pixels used in the linkless octree
 are used within the deepest layers of the linkless octree. This indicates that
 a significant number of leaf nodes exist in the deepest layers of the linkless octree,
 when the node size decreases. This is further supported by the increase in size of the Light
@@ -40,8 +43,9 @@ of nodes is the source of the increase in number of nodes which drives up the me
 and construction time.
 
 The influence of the starting depth on the construction time and the combined size of the textures
-is shown in figure \ref{} and \ref{} respectively. The construction time and memory usage
-are not effected by this change. However the memory overhead is reduced as
+is shown in figure \ref{fig:hs-sd-construction} and \ref{fig:hs-sd-memory} respectively.
+The construction time and memory usage
+are not effected by this change. However, the memory overhead is reduced as
 the total number of required textures is reduced. Increasing the starting depth
 removes the shallowest layers of the linkless octree. These have a relatively small
 influence on the total memory usage and the construction time as the spatial hash functions
@@ -73,9 +77,10 @@ during the shading step, thus improving the performance during shading.
 
 \subsection{Execution Time and Light Calculations}
 
-Figure \ref{} shows the execution time per frame for both the forward and deferred pipelines
-during a single simulation of both Tiled and Hashed Shading. Figure \ref{} shows the
-number of light calculations per frame during a single simulation of the deferred pipeline for
+Figure \ref{fig:hs-compare-frames:forward} and \ref{fig:hs-compare-frames:deferred} show the
+execution time per frame for the forward and deferred pipelines
+during a single simulation of both Tiled and Hashed Shading. Figure \ref{fig:hs-compare-frames:lc}
+shows the number of light calculations per frame during a single simulation of the deferred pipeline for
 Tiled, Clustered and Hashed Shading.
 
 In the deferred pipeline a similar performance with regards to the execution time can be observed for
@@ -113,16 +118,18 @@ and potentially surpass Clustered Shading.
 % of Clustered Shading. While Clustered Shading still requires less light calculations, the
 % difference in minimal. A further reduction in node size should reduce the gap in light calculations.
 
-In figure \ref{} the average execution time per frame for the Forward and Deferred pipelines as
+In figure \ref{fig:hs-compare-lights:forward} and \ref{fig:hs-compare-lights:deferred} the average
+execution time per frame for the Forward and Deferred pipelines as
 function of the number of lights is plotted. All of the algorithms scale linearly with the
 number of lights. The results are comparable to those observed for the single simulation. For Deferred
 Shading the performance increase of Hashed Shading is similar to that of Tiled Shading. In
 the Forward pipeline, again an improvement of a factor two is noticeable.
-The number of light calculations, figure \ref{}, shows that the reduction in calculation time
-is a direct result of the reduction of number of light calculations. The smallest node
-size shows a comparable curve to that of Clustered Shading.
+The number of light calculations, figure \ref{fig:hs-compare-lights:lc}, shows that the
+reduction in calculation time is a direct result of the reduction of number of light calculations.
+The smallest node size shows a comparable curve to that of Clustered Shading.
 
-The behaviour with regards to the resolution is shown in figure \ref{} and \ref{}.
+The behaviour with regards to the resolution is shown in figure \ref{fig:hs-compare-resolution:forward},
+\ref{fig:hs-compare-resolution:deferred} and \ref{fig:hs-compare-resolution:lc}.
 Both the execution time and the number of light calculations are linearly dependent on
 the number of fragments. 
 Hashed Shading performs slightly better with increasing resolutions, though the effect

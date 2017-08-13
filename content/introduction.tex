@@ -32,11 +32,11 @@ Shading algorithm is introduced. This algorithm makes use of a view frustum
 independent subdivision of the scene space, such that a change in camera
 position or orientation does not warrant a complete rebuild of the data
 structures. The subdivision itself is build upon the octree data structure, such
-that the scene space is represented both precise and memory efficient.
+that the scene space is represented efficiently in memory while still being precise.  
 
 In order to validate whether data structures persistent between frames can
 potentially achieve better performance than current light assignment data
-structures the Hashed Shading algorithm needs to achieve at least a similar
+structures, the Hashed Shading algorithm needs to achieve at least a similar
 execution time speed up and light calculation reduction as Tiled and Clustered
 Shading.
 

@@ -1,0 +1,80 @@
+%% Creator: Inkscape inkscape 0.92.1, www.inkscape.org
+%% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
+%% Accompanies image file 'NodeSize_ziggurat-city_65_data_m.pdf' (pdf, eps, ps)
+%%
+%% To include the image in your LaTeX document, write
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics{<filename>.pdf}
+%% To scale the image, write
+%%   \def\svgwidth{<desired width>}
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics[width=<desired width>]{<filename>.pdf}
+%%
+%% Images with a different path to the parent latex file can
+%% be accessed with the `import' package (which may need to be
+%% installed) using
+%%   \usepackage{import}
+%% in the preamble, and then including the image with
+%%   \import{<path to file>}{<filename>.pdf_tex}
+%% Alternatively, one can specify
+%%   \graphicspath{{<path to file>/}}
+%% 
+%% For more information, please see info/svg-inkscape on CTAN:
+%%   http://tug.ctan.org/tex-archive/info/svg-inkscape
+%%
+\begingroup%
+  \makeatletter%
+  \providecommand\color[2][]{%
+    \errmessage{(Inkscape) Color is used for the text in Inkscape, but the package 'color.sty' is not loaded}%
+    \renewcommand\color[2][]{}%
+  }%
+  \providecommand\transparent[1]{%
+    \errmessage{(Inkscape) Transparency is used (non-zero) for the text in Inkscape, but the package 'transparent.sty' is not loaded}%
+    \renewcommand\transparent[1]{}%
+  }%
+  \providecommand\rotatebox[2]{#2}%
+  \ifx\svgwidth\undefined%
+    \setlength{\unitlength}{515.48845037bp}%
+    \ifx\svgscale\undefined%
+      \relax%
+    \else%
+      \setlength{\unitlength}{\unitlength * \real{\svgscale}}%
+    \fi%
+  \else%
+    \setlength{\unitlength}{\svgwidth}%
+  \fi%
+  \global\let\svgwidth\undefined%
+  \global\let\svgscale\undefined%
+  \makeatother%
+  \begin{picture}(1,0.66677357)%
+    \put(0,0){\includegraphics[width=\unitlength,page=1]{./img/raw/hs-nodesize-memory/NodeSize_ziggurat-city_65_data_m.pdf}}%
+    \put(0.22830471,0.04534779){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{0.25}}}%
+    \put(0.44479841,0.04534779){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{0.5}}}%
+    \put(0.66129209,0.04534779){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{1.0}}}%
+    \put(0.87778581,0.04534779){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{2.0}}}%
+    \put(0.55304527,0.01845851){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{Knoop grootte}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=2]{./img/raw/hs-nodesize-memory/NodeSize_ziggurat-city_65_data_m.pdf}}%
+    \put(0.10647851,0.06586986){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{0}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=3]{./img/raw/hs-nodesize-memory/NodeSize_ziggurat-city_65_data_m.pdf}}%
+    \put(0.10647851,0.19228071){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{50000}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=4]{./img/raw/hs-nodesize-memory/NodeSize_ziggurat-city_65_data_m.pdf}}%
+    \put(0.10647851,0.31869153){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{100000}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=5]{./img/raw/hs-nodesize-memory/NodeSize_ziggurat-city_65_data_m.pdf}}%
+    \put(0.10647851,0.44510236){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{150000}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=6]{./img/raw/hs-nodesize-memory/NodeSize_ziggurat-city_65_data_m.pdf}}%
+    \put(0.10647851,0.57151318){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{200000}}}%
+    \put(0.02950145,0.36280942){\color[rgb]{0.14901961,0.14901961,0.14901961}\rotatebox{90}{\makebox(0,0)[b]{\smash{Geheugen gebruik}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=7]{./img/raw/hs-nodesize-memory/NodeSize_ziggurat-city_65_data_m.pdf}}%
+    \put(0.90924567,0.62146156){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lb]{\smash{Laag 7}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=8]{./img/raw/hs-nodesize-memory/NodeSize_ziggurat-city_65_data_m.pdf}}%
+    \put(0.90924567,0.59373604){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lb]{\smash{Laag 6}}}%
+    \put(0.90924567,0.56606811){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lb]{\smash{Laag 5}}}%
+    \put(0.90924567,0.53840017){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lb]{\smash{Laag 4}}}%
+    \put(0.90924567,0.51067465){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lb]{\smash{Laag 3}}}%
+    \put(0.90924567,0.48294912){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lb]{\smash{Laag 2}}}%
+    \put(0.90924567,0.4552236){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lb]{\smash{Laag 1}}}%
+    \put(0.90924567,0.42749807){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lb]{\smash{Laag 0}}}%
+  \end{picture}%
+\endgroup%

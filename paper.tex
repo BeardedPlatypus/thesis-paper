@@ -12,6 +12,7 @@
 \usepackage{tikz}
 \usepackage[export]{adjustbox}
 \usepackage{float}
+\usepackage{pdflscape}
 
 % tables
 \usepackage{booktabs}
@@ -20,25 +21,13 @@
 % url
 \usepackage{hyperref}
 
-%%% Make the ``BibTeX'' word pretty...
-%\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
-%    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
-
-%%% Used by the ``review'' variation; the online ID will be printed on 
-%%% every page of the content.
-
 % ------------------------------------------------------------------------------
 % acm art settings
 % ------------------------------------------------------------------------------
-%\TOGonlineid{45678}
-%\TOGvolume{0}
-%\TOGnumber{0}
-
 \title{Hashed Shading}
 \author{Martinus Wilhelmus Tegelaers}
 \affiliation{\institution{KULeuven}}
 \email{mwtegelaers@gmail.com}
-%\pdfauthor{Martinus Wilhelmus Tegelaers}
 
 \keywords{real-time graphics, light assignment, shading}
 
@@ -52,30 +41,26 @@
   </ccs2012>
 \end{CCSXML}
 
-
 \setcopyright{rightsretained}
 \copyrightyear{2017}
+
+\acmDOI{}
+\makeatletter
+\renewcommand\@formatdoi[1]{\ignorespaces}
+\makeatother
+
+\settopmatter{printacmref=false}
+\renewcommand\footnotetextcopyrightpermission[1]{}
+\pagestyle{empty}
 
 % ------------------------------------------------------------------------------
 % Document
 % ------------------------------------------------------------------------------
 \begin{document}
-\begin{teaserfigure}
-   \includegraphics[height=1.5in]{images/sampleteaser}
-   \caption{Spring Training 2009, Peoria, AZ.}
-   \label{fig:teaser}
-\end{teaserfigure}
-
+\input{./img/tex/teaser_img.tex}
 \input{./content/abstract.tex}
 
 \maketitle
-
-
-%\keywordlist
-
-%\conceptlist
-
-%\printcopyright
 
 \input{./content/introduction.tex}
 \input{./content/related_work.tex}  
@@ -84,16 +69,11 @@
 \input{./content/results.tex}
 \input{./content/conclusion.tex}
 
-%\section{Contact Information}
+\bibliographystyle{alpha}
+\bibliography{paper}
 
-%If you have questions or suggestions regarding this document, please
-%contact Stephen Spencer at ``spencer@cs.washington.edu''.
+\appendix
+\onecolumn
+\input{./content/appendix.tex}
 
-%\section*{Acknowledgements}
-
-%To Robert, for all the bagels.
-
-\bibliographystyle{acmsiggraph}
-\nocite{*}
-\bibliography{template}
 \end{document}

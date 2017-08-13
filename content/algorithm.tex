@@ -89,16 +89,16 @@ in more detail in the following sections.
 \input{./img/tex/hs-subdivision-scene.tex}
 
 To construct the octree a minimum bounding box containing all samples generated
-at any point during the simulation, needs to be defined. The minimum and maximum point
+at any point during the simulation needs to be defined. The minimum and maximum point
 that define the bounding box can either be set by the developer or be constructed based
 on the light volumes.
 
 In order to ensure no values are generated outside the bounding box due to rounding errors.
 a small offset is added to the points.
 
-Once the bounding box has been defined the size of the octree can be calculated.
+Once the bounding box has been defined, the size of the octree can be calculated.
 The developer is responsible for setting the size of the nodes in the deepest layer of
-the octree. Based on this node size $\mathit{l}_o$, the size of the octree can be calculated.
+the octree. Based on this node size, $\mathit{l}_o$, the size of the octree can be calculated.
 Assuming that $\mathit{d}_i$ is the length of the longest face of the bounding box, the
 size of the octree $\mathit{l}_o$ can be defined for the smallest possible $k$ such that holds
 
@@ -107,7 +107,7 @@ size of the octree $\mathit{l}_o$ can be defined for the smallest possible $k$ s
 \end{equation*}
 
 \noindent where $k$ is the number of layers within the octree. This is illustrated in figure
-\ref{fig:}. With the origin and size of the octree defined it is possible to assign the
+\ref{fig:hs-subdivision-scene}. With the origin and size of the octree defined it is possible to assign the
 lights to this subdivision.
 
 % To construct the octree a minimum bounding box which will fit all the lights at any
@@ -141,9 +141,9 @@ to the nodes with which it overlaps.
 
 Any light has an influence on a node if the light volume overlaps with the node volume.
 In the case of point lights whether a light overlaps with a node can be easily calculated
-by comparing the distance between the light origin $\mathbf{l}\mathtt{.orig}$ and the
+by comparing the distance between the light origin, $\mathbf{l}\mathtt{.orig}$, and the
 point $\mathbf{p}$ within the node closest to the origin of the light, with the radius
-$\mathbf{l}\mathtt{.radius}$A of the light. Is this distance smaller than the radius,
+$\mathbf{l}\mathtt{.radius}$ of the light. If this distance smaller than the radius,
 then the node overlaps with the light:
 
 \begin{equation*}
@@ -168,16 +168,15 @@ overlaps with a light volume falls within the minimal grid of nodes containing t
 volume. Furthermore, since each light volume is homogeneous, it is only necessary to establish the boundaries
 of overlapping and non-overlapping nodes in order to know of all nodes whether they overlap.
 This can be exploited by using a flood fill algorithm to reduce the amount of comparisons.
-First all nodes are assumed to be either overlapping or non-overlapping, then the nodes which
+First, all nodes are assumed to be either overlapping or non-overlapping, then the nodes which
 are not are marked as such. Since a sphere occupies slightly over half of its bounding box
 volume and partially overlapping nodes are considered to be overlapping, all nodes within
-the minimal grid of nodes are initialised to be overlapping. Then starting from the corners
+the minimal grid, of nodes are initialised to be overlapping. Then starting from the corners
 of the grid non-overlapping nodes are marked with a breadth first flood fill algorithm.
 This process is illustrated in figure \ref{fig:hs-mark}.
 
-\input{./img/tex/hs-slt.tex}
 
-Lastly the way lights are represented in memory needs to be considered. In order to efficiently
+Lastly, the way lights are represented in memory needs to be considered. In order to efficiently
 calculate the change of dynamic lights the influence of lights in the previous frame can be compared
 to the influence of lights in the current frame. In this case it is beneficial to save the
 individual lights such that lights that actually change between frames can be evaluated
@@ -209,6 +208,8 @@ is empty, then the octree node is empty as well. If this is not the case, then e
 node from the light origin within the octree node is empty or nonempty. The octree node is
 then respectively a branch node or a nonempty leaf node. In the case that an octree node is
 a branch node, then the types of the children of this node are evaluated as well.
+
+\input{./img/tex/hs-slt.tex}
 
 % We only consider point lights within the current implementation of the algorithm. In order to
 % support different light types, a similar approach need to be developed for these lights, such

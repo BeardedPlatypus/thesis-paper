@@ -1,0 +1,83 @@
+%% Creator: Inkscape inkscape 0.92.1, www.inkscape.org
+%% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
+%% Accompanies image file 'lights_ziggurat-city_2560.pdf' (pdf, eps, ps)
+%%
+%% To include the image in your LaTeX document, write
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics{<filename>.pdf}
+%% To scale the image, write
+%%   \def\svgwidth{<desired width>}
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics[width=<desired width>]{<filename>.pdf}
+%%
+%% Images with a different path to the parent latex file can
+%% be accessed with the `import' package (which may need to be
+%% installed) using
+%%   \usepackage{import}
+%% in the preamble, and then including the image with
+%%   \import{<path to file>}{<filename>.pdf_tex}
+%% Alternatively, one can specify
+%%   \graphicspath{{<path to file>/}}
+%% 
+%% For more information, please see info/svg-inkscape on CTAN:
+%%   http://tug.ctan.org/tex-archive/info/svg-inkscape
+%%
+\begingroup%
+  \makeatletter%
+  \providecommand\color[2][]{%
+    \errmessage{(Inkscape) Color is used for the text in Inkscape, but the package 'color.sty' is not loaded}%
+    \renewcommand\color[2][]{}%
+  }%
+  \providecommand\transparent[1]{%
+    \errmessage{(Inkscape) Transparency is used (non-zero) for the text in Inkscape, but the package 'transparent.sty' is not loaded}%
+    \renewcommand\transparent[1]{}%
+  }%
+  \providecommand\rotatebox[2]{#2}%
+  \ifx\svgwidth\undefined%
+    \setlength{\unitlength}{498.80563055bp}%
+    \ifx\svgscale\undefined%
+      \relax%
+    \else%
+      \setlength{\unitlength}{\unitlength * \real{\svgscale}}%
+    \fi%
+  \else%
+    \setlength{\unitlength}{\svgwidth}%
+  \fi%
+  \global\let\svgwidth\undefined%
+  \global\let\svgscale\undefined%
+  \makeatother%
+  \begin{picture}(1,0.68881572)%
+    \put(0,0){\includegraphics[width=\unitlength,page=1]{./img/raw/hs-exec-lights/deferred/lights_ziggurat-city_2560.pdf}}%
+    \put(0.0912353,0.04660604){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{0}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=2]{./img/raw/hs-exec-lights/deferred/lights_ziggurat-city_2560.pdf}}%
+    \put(0.23596772,0.04660604){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{200}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=3]{./img/raw/hs-exec-lights/deferred/lights_ziggurat-city_2560.pdf}}%
+    \put(0.38070014,0.04660604){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{400}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=4]{./img/raw/hs-exec-lights/deferred/lights_ziggurat-city_2560.pdf}}%
+    \put(0.52543256,0.04660604){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{600}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=5]{./img/raw/hs-exec-lights/deferred/lights_ziggurat-city_2560.pdf}}%
+    \put(0.67016494,0.04660604){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{800}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=6]{./img/raw/hs-exec-lights/deferred/lights_ziggurat-city_2560.pdf}}%
+    \put(0.81489739,0.04660604){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{1000}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=7]{./img/raw/hs-exec-lights/deferred/lights_ziggurat-city_2560.pdf}}%
+    \put(0.95962978,0.04660604){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{1200}}}%
+    \put(0.53809666,0.01881743){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[b]{\smash{Aantal lichten}}}%
+    \put(0.07659421,0.14983616){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{0}}}%
+    \put(0.07659421,0.23353172){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{50}}}%
+    \put(0.07659421,0.31722725){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{100}}}%
+    \put(0.07659421,0.40092282){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{150}}}%
+    \put(0.07659421,0.4846184){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{200}}}%
+    \put(0.07659421,0.56831395){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{250}}}%
+    \put(0.07659421,0.65200952){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[rb]{\smash{300}}}%
+    \put(0.03048815,0.37468534){\color[rgb]{0.14901961,0.14901961,0.14901961}\rotatebox{90}{\makebox(0,0)[b]{\smash{Executietijd (ms)}}}}%
+    \put(0.16480493,0.64198824){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lb]{\smash{Naief}}}%
+    \put(0.16480493,0.61362987){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lb]{\smash{Tiled - 32}}}%
+    \put(0.16480493,0.5852715){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lb]{\smash{Hashed - 0.25}}}%
+    \put(0.16480493,0.55691314){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lb]{\smash{Hashed - 0.5}}}%
+    \put(0.16480493,0.52855477){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lb]{\smash{Hashed - 1.0}}}%
+    \put(0.16480493,0.50019641){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lb]{\smash{Hashed - 2.0}}}%
+    \put(0.16480493,0.47183803){\color[rgb]{0.14901961,0.14901961,0.14901961}\makebox(0,0)[lb]{\smash{Hashed - 3.0}}}%
+  \end{picture}%
+\endgroup%
