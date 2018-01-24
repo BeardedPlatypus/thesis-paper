@@ -61,19 +61,19 @@ were executed for three demo scenes, which can be found in the
 
 ### Indoor Spaceship Scene
 
-<iframe width="1280" height="720" src="https://www.youtube.com/embed/u9o_V4ynB_A" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+[![Indoor Space Ship Video](https://img.youtube.com/vi/u9o_V4ynB_A/0.jpg)](https://www.youtube.com/watch?v=u9o_V4ynB_A)
 
 *Based upon: [3D Render Challenge #18](http://www.3drender.com/challenges/) modelled by Juan Carlos Silva.*
 
 ### Piper's Alley Scene
 
-<iframe width="1280" height="720" src="https://www.youtube.com/embed/nIyifYvU9vI" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+[![Piper's Alley Video](https://img.youtube.com/vi/nIyifYvU9vI/0.jpg)](https://www.youtube.com/watch?v=nIyifYvU9vI)
 
 *Based upon: [CGSociety Lighting Challenge #42](http://forums.cgsociety.org/showthread.php?t=1309021) made by Clint Rodriues.*
 
 ### Ziggurat Scene
 
-<iframe width="1280" height="720" src="https://www.youtube.com/embed/HrqiPATdB0Y" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+[![Ziggurat Video](https://img.youtube.com/vi/HrqiPATdB0Y/0.jpg)](https://www.youtube.com/watch?v=HrqiPATdB0Y)
 
 *Based upon: [Sintel Open Movie Ziggurat Scene](https://durian.blender.org).*
 
