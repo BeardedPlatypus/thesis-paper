@@ -31,9 +31,29 @@ Currently Hashed Shading does not support dynamic lights, and requires significa
 memory to store the linkless octree. Solutions for these issues are proposed but
 have not been implemented.
 
+## Algorithm
+
+<img src="https://github.com/BeardedPlatypus/thesis-paper/blob/master/algorithm.png?raw=true" alt="Algorithm image" title="Subdivision of scene space" align="middle" width="888px" />
+
+The Hashed Shading algorithm uses an octree to subdivide the scene space. In each
+leaf node, the intersecting finite lights are stored. This octree can be queried 
+when frames are subsequently rendered, with the scene positions of pixels. Each
+query returns the set of lights which intersect with the leaf node the pixel falls
+within. Thus reducing the set of lights that needs to be evaluated.  
+
+This octree data structure is independent from the view frustum, and thus the 
+creation of the initial octree can executed as a pre-process. 
+
+In order to efficiently access the octree on the GPU, the 
+[linkless octree implementation](https://hub.hku.hk/bitstream/10722/134617/2/content.pdf?accept=1) 
+is used. This approach utilises spatial hash maps which are saved in textures, 
+to represent each layer of the octree. Because each layer is represented by a
+texture, it can be efficiently accessed on the GPU. 
+
 ## See also
 
 * [The repository of the software implementing the Hashed Shading algorithm.](https://github.com/BeardedPlatypus/nTiled)
 * [The repository of the complete master thesis (in dutch).](https://github.com/BeardedPlatypus/thesis-latex)
+* [The repository of all the data gathered presented in this paper.](https://github.com/BeardedPlatypus/thesis-data)
 
 
