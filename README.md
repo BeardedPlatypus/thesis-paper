@@ -13,7 +13,7 @@ with the popular light assignment algorithms: Tiled Shading and Clustered Shadin
 
 ## Abstract
 
-_(as written in [paper](https://github.com/BeardedPlatypus/thesis-paper/blob/master/paper.pdf))_
+_(as written in the [paper](https://github.com/BeardedPlatypus/thesis-paper/blob/master/paper.pdf))_
 
 This paper introduces the Hashed Shading algorithm, a light assignment algorithm
 for forward and deferred shading. It uses a subdivision independent from the view
