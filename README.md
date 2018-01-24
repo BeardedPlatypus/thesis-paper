@@ -33,8 +33,6 @@ have not been implemented.
 
 ## Algorithm
 
-<img src="https://github.com/BeardedPlatypus/thesis-paper/blob/master/algorithm.png?raw=true" alt="Algorithm image" title="Subdivision of scene space" align="middle" width="444px" />
-
 The Hashed Shading algorithm uses an octree to subdivide the scene space. In each
 leaf node, the intersecting finite lights are stored. This octree can be queried 
 when frames are subsequently rendered, with the scene positions of pixels. Each
@@ -49,6 +47,36 @@ In order to efficiently access the octree on the GPU, the
 is used. This approach utilises spatial hash maps which are saved in textures, 
 to represent each layer of the octree. Because each layer is represented by a
 texture, it can be efficiently accessed on the GPU. 
+
+## Technique comparisons
+
+Hashed Shading is compared with Tiled Shading, Clustered Shading and runs 
+without any light assignment algorithms. The results of these experiments
+are visualised in the following videos. On the left the actual rendered 
+frame is displayed, on the right the number of light calculations per pixel
+is visualised, where a white pixel corresponds with the maximum number of 
+light calculations, and black with no light calculations. These experiments
+were executed for three demo scenes, which can be found in the 
+[data repository](https://github.com/BeardedPlatypus/thesis-data).
+
+### Indoor Spaceship Scene
+
+<iframe width="1280" height="720" src="https://www.youtube.com/embed/u9o_V4ynB_A" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+*Based upon: [3D Render Challenge #18](http://www.3drender.com/challenges/) modelled by Juan Carlos Silva.*
+
+### Piper's Alley Scene
+
+<iframe width="1280" height="720" src="https://www.youtube.com/embed/nIyifYvU9vI" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+*Based upon: [CGSociety Lighting Challenge #42](http://forums.cgsociety.org/showthread.php?t=1309021) made by Clint Rodriues.*
+
+### Ziggurat Scene
+
+<iframe width="1280" height="720" src="https://www.youtube.com/embed/HrqiPATdB0Y" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+*Based upon: [Sintel Open Movie Ziggurat Scene](https://durian.blender.org).*
+
 
 ## See also
 
