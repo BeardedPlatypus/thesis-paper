@@ -33,7 +33,7 @@ have not been implemented.
 
 ## Algorithm
 
-<img src="https://github.com/BeardedPlatypus/thesis-paper/blob/master/algorithm.png?raw=true" alt="Algorithm image" title="Subdivision of scene space" align="middle" width="888px" />
+<img src="https://github.com/BeardedPlatypus/thesis-paper/blob/master/algorithm.png?raw=true" alt="Algorithm image" title="Subdivision of scene space" align="middle" width="444px" />
 
 The Hashed Shading algorithm uses an octree to subdivide the scene space. In each
 leaf node, the intersecting finite lights are stored. This octree can be queried 
